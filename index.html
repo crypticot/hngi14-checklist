@@ -93,7 +93,7 @@
             background-color: var(--card-bg);
             background-image: linear-gradient(180deg, #061530 0%, #02070f 100%);
             border: 4px solid var(--hng-blue);
-            padding: 50px 40px 35px 40px; /* Tightly padded bottom to make space look balanced */
+            padding: 60px 50px 45px 50px;
             box-sizing: border-box;
             border-radius: 24px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
@@ -108,7 +108,7 @@
         /* Headers & Badges */
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 44px;
         }
 
         .header h1 {
@@ -118,6 +118,73 @@
             color: var(--hng-blue);
             margin: 0 0 12px 0;
             letter-spacing: -0.5px;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .profile-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--hng-blue);
+            flex-shrink: 0;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .profile-name {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--text-light);
+        }
+
+        .profile-role {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--hng-blue);
+        }
+
+        .profile-team {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .profile-section.no-photo {
+            justify-content: center;
+            text-align: center;
+        }
+
+        #photoInput {
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        #photoInput:focus {
+            border-color: var(--hng-blue);
+            outline: none;
         }
 
         .slack-badge {
@@ -148,9 +215,28 @@
         .checklist-grid {
             display: grid;
             grid-template-columns: 1fr 1fr !important;
-            gap: 20px;
+            gap: 16px;
             flex-grow: 1;
             align-content: start;
+        }
+
+        .category-header {
+            grid-column: 1 / -1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--hng-blue);
+            padding-top: 12px;
+            margin-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .category-header:first-child {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0;
         }
 
         /* Accessible Interactive Row */
@@ -159,7 +245,7 @@
             align-items: center;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 16px;
+            padding: 18px 16px;
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -406,33 +492,36 @@
         <label for="slackIdInput" style="display: block; text-align: center; margin-bottom: 6px;">Enter HNG i14 Slack ID:</label>
         <input type="text" id="slackIdInput" placeholder="e.g. Mebud" required oninput="syncSlackId(this.value)" style="text-align: center;">
         <div id="errorTxt" class="error-message" style="text-align: center; width: 100%;">Please enter your Slack ID before downloading.</div>
+
+        <label for="photoInput" style="display: block; text-align: center; margin-top: 16px; margin-bottom: 6px;">Upload Your Photo (optional):</label>
+        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(this)" style="text-align: center; padding: 10px 16px; font-family: 'DM Sans', sans-serif;">
     </div>
 
     <div class="card-wrapper">
         <div id="checklistCard" class="checklist-card">
             <div class="header">
-                <div id="slackDisplay" class="slack-badge">@Slack_ID</div>
+                <div id="profileSection" class="profile-section no-photo">
+                    <img id="profilePhoto" class="profile-photo" src="" alt="Profile Photo" style="display: none;">
+                    <div class="profile-info">
+                        <div id="slackDisplay" class="profile-name">@Slack_ID</div>
+                        <div class="profile-role">Frontend Intern</div>
+                        <div class="profile-team">Team Alpha</div>
+                    </div>
+                </div>
                 <h1>14 Things in HNG 14</h1>
                 <p>What kind of intern were you? 🚀</p>
             </div>
 
             <div class="checklist-grid">
                 
+                <div class="category-header">Work Life</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Stayed up all night on a task</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Slept on a huddle/call</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Failed a Stage</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Topped the scoresheet</div>
+                    <div class="item-text">Missed a deadline</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -440,7 +529,35 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Missed a deadline</div>
+                    <div class="item-text">Topped the scoresheet</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Failed a Stage</div>
+                </div>
+
+                <div class="category-header">Social Life</div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Made great friends</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Fell in love</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Opened a random huddle</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Received an award</div>
+                </div>
+
+                <div class="category-header">Survival Mode</div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Fell sick</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -452,27 +569,11 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Fell sick</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Fell in love</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
                     <div class="item-text">Visited the #mental-health asylum</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Deported to #yakubu-manage</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Made great friends</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Received an award</div>
                 </div>
 
             </div>
@@ -510,6 +611,25 @@
         let checklistBlob = null;
         let generatedFileName = "";
         let finalCaptionText = "";
+
+        function handlePhotoUpload(input) {
+            const file = input.files[0];
+            const photoEl = document.getElementById('profilePhoto');
+            const profileSection = document.getElementById('profileSection');
+            if (!file) {
+                photoEl.style.display = 'none';
+                photoEl.src = '';
+                profileSection.classList.add('no-photo');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                photoEl.src = e.target.result;
+                photoEl.style.display = 'block';
+                profileSection.classList.remove('no-photo');
+            };
+            reader.readAsDataURL(file);
+        }
 
         // Synchronize input fields with the image banner element context live
         function syncSlackId(val) {
@@ -561,9 +681,9 @@
             allItems.forEach((item, index) => {
                 const itemNumber = index + 1;
                 if (item.classList.contains('checked')) {
-                    if ([1, 3, 6, 7, 8, 9, 11].includes(itemNumber)) crusader++;
-                    else if ([4, 5, 14].includes(itemNumber)) scholar++;
-                    else if ([2, 10, 12, 13].includes(itemNumber)) butterfly++;
+                    if ([1, 2, 5, 10, 11, 12, 13].includes(itemNumber)) crusader++;
+                    else if ([3, 4, 9].includes(itemNumber)) scholar++;
+                    else if ([6, 7, 8, 14].includes(itemNumber)) butterfly++;
                 }
             });
             
