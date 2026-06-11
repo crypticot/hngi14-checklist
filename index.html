@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HNG i14 Checklist - Flare Tag</title>
+    <title>HNG i14 Checklist</title>
     <!-- Google Fonts Integration -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,407 +12,408 @@
     <!-- html2canvas for image generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-	<style>
-			:root {
-				--brand-orange: #fa5424;
-				/* High contrast dark background for the card to pass WCAG AAA with white text and vibrant orange */
-				--card-bg: #110502; 
-				--text-light: #ffffff;
-				--text-muted: #fcdbd2; /* High contrast variant of orange-tinted white */
-				--success-green: #fa5424; 
-			}
+<style>
+        :root {
+            --hng-blue: #00a3ff; /* Electric blue sourced directly from image assets */
+            --card-bg: #030914;  /* Ultra-dark canvas for WCAG AAA contrast compliance */
+            --text-light: #ffffff;
+            --text-muted: #b0c4de; 
+            --success-blue: #00a3ff; 
+        }
 
-			body {
-				font-family: 'DM Sans', sans-serif;
-				background-color: #f3f4f6;
-				color: #1a1a1a;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				min-height: 100vh;
-				margin: 0;
-				padding: 20px;
-			}
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #f3f4f6;
+            color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
 
-			/* Form Wrapper outside the card */
-			.input-container {
-				width: 100%;
-				max-width: 680px;
-				margin-bottom: 20px;
-				display: flex;
-				flex-direction: column;
-				gap: 8px;
-			}
+        /* Form Wrapper */
+        .input-container {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
 
-			.input-container label {
-				font-family: 'Plus Jakarta Sans', sans-serif;
-				font-weight: 700;
-				font-size: 14px;
-				color: #1a1a1a;
-			}
+        .input-container label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1a1a1a;
+        }
 
-			.input-container input {
-				padding: 14px 16px;
-				border: 2px solid #ccc;
-				border-radius: 8px;
-				font-size: 16px;
-				font-family: 'DM Sans', sans-serif;
-				width: 100%;
-				box-sizing: border-box;
-				transition: border-color 0.2s;
-			}
+        .input-container input {
+            padding: 14px 16px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'DM Sans', sans-serif;
+            width: 100%;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
 
-			.input-container input:focus {
-				border-color: var(--brand-orange);
-				outline: none;
-			}
+        .input-container input:focus {
+            border-color: var(--hng-blue);
+            outline: none;
+        }
 
-			.error-message {
-				color: #dc2626;
-				font-size: 14px;
-				font-weight: 500;
-				display: none;
-			}
+        .error-message {
+            color: #dc2626;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+        }
 
-			/* Wrapper to handle mobile scaling without fracturing the grid structure */
-			.card-wrapper {
-				width: 100%;
-				max-width: 680px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				overflow: visible;
-			}
+        /* Card Scale/Snapshot Wrapper Containers */
+        .card-wrapper {
+            width: 100%;
+            max-width: 680px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible;
+        }
 
-			/* -----------------------------------------
-			   THE CHECKLIST CARD (9:16 Aspect Ratio Target)
-			   Locked blueprint for consistent image snapshotting
-			-------------------------------------------- */
-			.checklist-card {
-				width: 680px; /* Rigidly locked width */
-				min-height: 960px; 
-				background-color: var(--card-bg);
-				background-image: linear-gradient(180deg, #1f0a04 0%, #0d0301 100%);
-				border: 4px solid var(--brand-orange);
-				padding: 50px 40px;
-				box-sizing: border-box;
-				border-radius: 24px;
-				box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-				display: flex;
-				flex-direction: column;
-				color: var(--text-light);
-				position: relative;
-				transform-origin: center top;
-				flex-shrink: 0;
-			}
+        /* -----------------------------------------
+           THE CHECKLIST CARD (9:16 Aspect Ratio)
+        -------------------------------------------- */
+        .checklist-card {
+            width: 680px;
+            min-height: 960px; 
+            background-color: var(--card-bg);
+            background-image: linear-gradient(180deg, #061530 0%, #02070f 100%);
+            border: 4px solid var(--hng-blue);
+            padding: 50px 40px 35px 40px; /* Tightly padded bottom to make space look balanced */
+            box-sizing: border-box;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            color: var(--text-light);
+            position: relative;
+            transform-origin: center top;
+            flex-shrink: 0;
+        }
 
-			.header {
-				text-align: center;
-				margin-bottom: 40px;
-			}
+        /* Headers & Badges */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-			.header h1 {
-				font-family: 'Plus Jakarta Sans', sans-serif;
-				font-weight: 800;
-				font-size: 32px;
-				color: var(--brand-orange);
-				margin: 0 0 12px 0;
-				letter-spacing: -0.5px;
-			}
+        .header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 32px;
+            color: var(--hng-blue);
+            margin: 0 0 12px 0;
+            letter-spacing: -0.5px;
+        }
 
-			/* Visual placeholder where the user's Slack ID is mirrored inside the image */
-			.slack-badge {
-				display: inline-block;
-				background: rgba(250, 84, 36, 0.15);
-				border: 1px solid var(--brand-orange);
-				padding: 6px 16px;
-				border-radius: 20px;
-				font-family: 'Plus Jakarta Sans', sans-serif;
-				font-weight: 700;
-				font-size: 14px;
-				color: var(--text-light);
-				margin-bottom: 16px;
-			}
+        .slack-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 163, 255, 0.15);
+            border: 1px solid var(--hng-blue);
+            padding: 6px 16px;
+            height: 32px;
+            box-sizing: border-box;
+            border-radius: 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
 
-			.header p {
-				font-size: 16px;
-				color: var(--text-muted);
-				margin: 0;
-				line-height: 1.5;
-			}
+        .header p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.5;
+        }
 
-			/* 2-Column Grid Layout - Strictly forced to stay 2-columns on all viewports */
-			.checklist-grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr !important;
-				gap: 20px;
-				flex-grow: 1;
-				align-content: start;
-			}
+        /* 2-Column Grid Layout */
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 20px;
+            flex-grow: 1;
+            align-content: start;
+        }
 
-			/* Accessible Interactive Row */
-			.item {
-				display: flex;
-				align-items: center;
-				background: rgba(255, 255, 255, 0.04);
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				padding: 16px;
-				border-radius: 12px;
-				cursor: pointer;
-				transition: all 0.2s ease;
-				user-select: none;
-			}
+        /* Accessible Interactive Row */
+        .item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
 
-			.item:hover, .item:focus-visible {
-				background: rgba(250, 84, 36, 0.08);
-				border-color: rgba(250, 84, 36, 0.4);
-				outline: none;
-			}
+        .item:hover, .item:focus-visible {
+            background: rgba(0, 163, 255, 0.08);
+            border-color: rgba(0, 163, 255, 0.4);
+            outline: none;
+        }
 
-			/* Custom Checkbox Design matching WCAG Focus expectations */
-			.checkbox {
-				width: 24px;
-				height: 24px;
-				border: 2px solid var(--text-muted);
-				border-radius: 6px;
-				margin-right: 14px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				transition: all 0.15s ease;
-				flex-shrink: 0;
-				background: transparent;
-			}
+        /* Checkbox Design */
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+            background: transparent;
+        }
 
-			.item.checked .checkbox {
-				background-color: var(--success-green);
-				border-color: var(--success-green);
-			}
+        .item.checked .checkbox {
+            background-color: var(--success-blue);
+            border-color: var(--success-blue);
+        }
 
-			.checkbox::after {
-				content: '';
-				width: 6px;
-				height: 12px;
-				border: solid white;
-				border-width: 0 3px 3px 0;
-				transform: rotate(45deg);
-				margin-bottom: 2px;
-				display: none;
-			}
+        .checkbox::after {
+            content: '';
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            margin-bottom: 2px;
+            display: none;
+        }
 
-			.item.checked .checkbox::after {
-				display: block;
-			}
+        .item.checked .checkbox::after {
+            display: block;
+        }
 
-			.item-text {
-				font-size: 15px;
-				font-weight: 500;
-				line-height: 1.4;
-				color: var(--text-light);
-			}
+        .item-text {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--text-light);
+        }
 
-			.item.checked .item-text {
-				text-decoration: line-through;
-				opacity: 0.5;
-			}
+        .item.checked .item-text {
+            text-decoration: line-through;
+            opacity: 0.4;
+        }
 
-			/* Footer & Compliance Links */
-			.footer {
-				text-align: center;
-				margin-top: 40px;
-				font-size: 14px;
-				color: var(--text-muted);
-				border-top: 1px solid rgba(255, 255, 255, 0.1);
-				padding-top: 20px;
-			}
+		/* -----------------------------------------
+           NEW: EMBEDDED DYNAMIC WRAPPED PROFILE BADGE
+        -------------------------------------------- */
+        .embedded-checklist-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 20px 24px;
+            border-radius: 16px;
+            margin-top: 35px; /* Safely occupies the blank area above the divider */
+            margin-bottom: 5px;
+            display: flex; /* Fixed the property here */
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 70px; /* 🚀 Added structural anchor to prevent mobile scaling collapse */
+        }
 
-			.footer a {
-				color: var(--brand-orange);
-				text-decoration: none;
-				font-weight: 700;
-				outline-offset: 4px;
-			}
+        .embedded-badge-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+        }
 
-			.footer a:hover, .footer a:focus {
-				text-decoration: underline;
-			}
+        .embedded-badge-count {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #bae6fd;
+            background: rgba(0, 163, 255, 0.2);
+            border: 1px solid rgba(0, 163, 255, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
 
-			/* Action Buttons */
-			.download-btn {
-				margin-top: 24px;
-				margin-bottom: 40px;
-				padding: 16px 40px;
-				background-color: var(--brand-orange);
-				color: white;
-				border: none;
-				border-radius: 30px;
-				font-family: 'Plus Jakarta Sans', sans-serif;
-				font-size: 16px;
-				font-weight: 700;
-				cursor: pointer;
-				box-shadow: 0 4px 14px rgba(250, 84, 36, 0.4);
-				transition: transform 0.1s ease, background-color 0.2s;
-			}
+        /* Footer & Compliance Links */
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
 
-			.download-btn:hover {
-				background-color: #e04416;
-			}
+        .footer a {
+            color: var(--hng-blue);
+            text-decoration: none;
+            font-weight: 700;
+            outline-offset: 4px;
+        }
 
-			.download-btn:active {
-				transform: scale(0.98);
-			}
+        .footer a:hover, .footer a:focus {
+            text-decoration: underline;
+        }
 
-			/* DYNAMIC RESPONSIVE MOBILE SCALING 
-			Fixed scale origins to eliminate vertical alignment shifts */
-			@media (max-width: 720px) {
-				body {
-					padding: 10px;
-				}
-				.card-wrapper {
-					height: calc(960px * 0.52); 
-					margin-bottom: 20px;
-					display: grid;
-					place-items: center; /* Forces the internal element alignment workspace to center */
-				}
-				.checklist-card {
-					transform: scale(0.52); 
-					transform-origin: top center; /* Anchors the scaling matrix tightly to the top center point */
-					margin: 0 auto;
-				}
-			}
+        /* Action Buttons */
+        .download-btn {
+            margin-top: 24px;
+            margin-bottom: 40px;
+            padding: 16px 40px;
+            background-color: var(--hng-blue);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0, 163, 255, 0.4);
+            transition: transform 0.1s ease, background-color 0.2s;
+        }
 
-			@media (max-width: 400px) {
-				.card-wrapper {
-					height: calc(960px * 0.43);
-					display: grid;
-					place-items: center;
-				}
-				.checklist-card {
-					transform: scale(0.43);
-					transform-origin: top center;
-					margin: 0 auto;
-				}
-			}
-			
-			/* Success Modal Overlay */
-			.modal-overlay {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: rgba(0, 0, 0, 0.7);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				z-index: 1000;
-				opacity: 0;
-				pointer-events: none;
-				transition: opacity 0.3s ease;
-			}
+        .download-btn:hover {
+            background-color: #008be3;
+        }
 
-			.modal-overlay.active {
-				opacity: 1;
-				pointer-events: auto;
-			}
+        .download-btn:active {
+            transform: scale(0.98);
+        }
 
-			/* Modal Content Card */
-			.modal-content {
-				background: white;
-				padding: 30px;
-				border-radius: 16px;
-				max-width: 400px;
-				width: 90%;
-				text-align: center;
-				box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-				transform: translateY(20px);
-				transition: transform 0.3s ease;
-				color: #333;
-			}
+		/* DYNAMIC RESPONSIVE MOBILE SCALING */
+        @media (max-width: 720px) {
+            body {
+                padding: 16px;
+            }
+            .input-container, .download-btn {
+                max-width: calc(680px * 0.52);
+                width: 100%;
+            }
+            /* UPDATED WRAPPER: Pushes card down cleanly on mid-size mobile devices */
+            .card-wrapper {
+                height: calc(960px * 0.52); 
+                padding-top: 36px; /* Fixes the overlap spacing gap */
+                margin-bottom: 20px;
+                display: grid;
+                place-items: center;
+                box-sizing: content-box; /* Protects height calculations */
+            }
+            .checklist-card {
+                transform: scale(0.52); 
+                transform-origin: top center;
+                margin: 0 auto;
+            }
+        }
 
-			.modal-overlay.active .modal-content {
-				transform: translateY(0);
-			}
+        @media (max-width: 400px) {
+            .input-container, .download-btn {
+                max-width: calc(680px * 0.43);
+            }
+            /* UPDATED WRAPPER: Pushes card down cleanly on small mobile devices */
+            .card-wrapper {
+                height: calc(960px * 0.43);
+                padding-top: 36px; /* Fixes the overlap spacing gap */
+                display: grid;
+                place-items: center;
+                box-sizing: content-box; /* Protects height calculations */
+            }
+            .checklist-card {
+                transform: scale(0.43);
+                transform-origin: top center;
+                margin: 0 auto;
+            }
+        }
+        
+        /* Success Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
 
-			.modal-content h2 {
-				font-family: 'Plus Jakarta Sans', sans-serif;
-				color: var(--brand-orange);
-				margin-top: 0;
-			}
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
-			.modal-content p {
-				font-size: 15px;
-				line-height: 1.5;
-				color: #555;
-				margin-bottom: 20px;
-			}
+        .modal-content {
+            background: white; padding: 30px; border-radius: 20px;
+            max-width: 460px; width: 90%; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(20px); transition: transform 0.3s ease;
+            color: #1a1a1a;
+        }
 
-			/* Caption Preview Box (Set to pre-line to drop code indents automatically) */
-			.caption-preview {
-				background: #f3f4f6;
-				padding: 12px;
-				border-radius: 8px;
-				font-size: 13px;
-				text-align: left;
-				white-space: pre-line; 
-				margin-bottom: 20px;
-				border: 1px solid #e5e7eb;
-			}
+        .modal-overlay.active .modal-content { transform: translateY(0); }
 
-			/* Modal Buttons Layout */
-			.modal-actions {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-			}
+        .modal-content h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #0055ff; margin-top: 0; font-size: 24px;
+        }
 
-			.modal-btn {
-				padding: 12px 24px;
-				border: none;
-				border-radius: 25px;
-				font-family: 'Plus Jakarta Sans', sans-serif;
-				font-weight: 700;
-				font-size: 15px;
-				cursor: pointer;
-				transition: background 0.2s;
-			}
+        .assigned-title-badge {
+            background: #e0f2fe; color: #0077ff;
+            font-weight: 800; padding: 8px 16px;
+            border-radius: 30px; display: inline-block;
+            margin-bottom: 15px; font-family: 'Plus Jakarta Sans', sans-serif;
+        }
 
-			.btn-primary {
-				background-color: var(--brand-orange);
-				color: white;
-			}
+        .caption-preview {
+            background: #f3f4f6; padding: 12px; border-radius: 8px;
+            font-size: 13px; text-align: left; white-space: pre-line; 
+            margin-bottom: 20px; border: 1px solid #e5e7eb;
+        }
 
-			.btn-primary:hover {
-				background-color: #e04416;
-			}
-
-			.btn-secondary {
-				background-color: #e5e7eb;
-				color: #333;
-			}
-
-			.btn-secondary:hover {
-				background-color: #d1d5db;
-			}
-	</style>
+        .modal-actions { display: flex; flex-direction: column; gap: 10px; }
+        .modal-btn {
+            padding: 14px 24px; border: none; border-radius: 25px;
+            font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700;
+            font-size: 15px; cursor: pointer; transition: background 0.2s;
+        }
+        .btn-primary { background-color: var(--hng-blue); color: white; }
+        .btn-primary:hover { background-color: #008be3; }
+        .btn-secondary { background-color: #e5e7eb; color: #333; }
+        .btn-secondary:hover { background-color: #d1d5db; }
+    </style>
 </head>
+
 <body>
 
-    <!-- Required User Validation Form Input Fields -->
-	<div class="input-container">
-        <label for="slackIdInput">Enter your HNG i14 Slack ID to Unlock Download:</label>
-        <input type="text" id="slackIdInput" placeholder="e.g. Mebud" required oninput="syncSlackId(this.value)">
-        <div id="errorTxt" class="error-message">Please enter your Slack ID before downloading your checklist.</div>
+    <div class="input-container" style="text-align: center;">
+        <label for="slackIdInput" style="display: block; text-align: center; margin-bottom: 6px;">Enter HNG i14 Slack ID:</label>
+        <input type="text" id="slackIdInput" placeholder="e.g. Mebud" required oninput="syncSlackId(this.value)" style="text-align: center;">
+        <div id="errorTxt" class="error-message" style="text-align: center; width: 100%;">Please enter your Slack ID before downloading.</div>
     </div>
 
     <div class="card-wrapper">
         <div id="checklistCard" class="checklist-card">
-            
             <div class="header">
                 <div id="slackDisplay" class="slack-badge">@Slack_ID</div>
                 <h1>14 Things in HNG 14</h1>
-                <p>How many of these have you done this cohort? 🚀</p>
+                <p>What kind of intern were you? 🚀</p>
             </div>
 
             <div class="checklist-grid">
@@ -423,7 +424,7 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Missed a check-in</div>
+                    <div class="item-text">Slept on a huddle/call</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -431,21 +432,20 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Topped the scoresheet in a stage</div>
+                    <div class="item-text">Topped the scoresheet</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Visited the #mental-health asylum</div>
+                    <div class="item-text">Did a live presentation</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Made great friends</div>
+                    <div class="item-text">Missed a deadline</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Almost ran mad</div>
                 </div>
-
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Actually ran mad</div>
@@ -456,19 +456,19 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Slept on a huddle/call</div>
+                    <div class="item-text">Fell in love</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Did a live presentation</div>
+                    <div class="item-text">Visited the #mental-health asylum</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Deported to #Yakubu-Manage</div>
+                    <div class="item-text">Deported to #yakubu-manage</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Missed a deadline</div>
+                    <div class="item-text">Made great friends</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -477,29 +477,40 @@
 
             </div>
 
+            <div class="embedded-checklist-badge">
+                <div id="cardPersonaTitle" class="embedded-badge-title">The Workspace Crusader</div>
+                <div id="cardCheckedCounter" class="embedded-badge-count">0 / 14 Done</div>
+            </div>
+
             <div class="footer">
                 Powered by <a id="brandLink" href="https://flaretag.hng14.com" target="_blank" rel="noopener">Flare Tag</a>
             </div>
         </div>
     </div>
 
-    <button class="download-btn" onclick="downloadChecklist()">Download Checklist Image</button>
-    
+    <button class="download-btn" onclick="downloadChecklist()">Download Checklist</button>
+
     <div id="successModal" class="modal-overlay">
         <div class="modal-content">
-            <h2>Checklist Saved! 🚀</h2>
-            <p id="modalMessage">Your checklist has been downloaded successfully.</p>
+            <h2>Your HNG Checklist is Ready!</h2>
+            <div class="assigned-title-badge" id="assignedBadge">The Workspace Crusader</div>
+            <p id="modalMessage" style="font-size: 14px; margin-bottom: 20px; color: #555;">Your Checklist is successfully saved to your device!</p>
             
-            <div class="caption-preview" id="captionText">Here's what I did during HNG i14!<br>Sign up for HNG at https://hng.tech/internship.<br>This was powered by the Flare Tag team. https://flaretag.hng14.com/</div>
+            <div class="caption-preview" id="captionText">This is the kind of intern I was during HNG i14!<br>Sign up for HNG at https://hng.tech/internship.</div>
             
             <div class="modal-actions">
-                <button id="shareBtn" class="modal-btn btn-primary" onclick="handleSocialShare()">Share to Social Media</button>
+                <button id="shareBtn" class="modal-btn btn-primary" onclick="handleSocialShare()">Copy Caption</button>
                 <button class="modal-btn btn-secondary" onclick="closeModal()">Close</button>
             </div>
         </div>
     </div>
 		
-    <script>
+<script>
+        // Global storage variables for the single generated image blob
+        let checklistBlob = null;
+        let generatedFileName = "";
+        let finalCaptionText = "";
+
         // Synchronize input fields with the image banner element context live
         function syncSlackId(val) {
             const display = document.getElementById('slackDisplay');
@@ -513,8 +524,14 @@
 
         // Checklist Element Interaction State Changes
         function toggleItem(element) {
-            const isChecked = element.classList.toggle('checked');
-            element.setAttribute('aria-checked', isChecked ? 'true' : 'false');
+            element.classList.toggle('checked');
+            const checked = element.classList.contains('checked');
+            element.setAttribute('aria-checked', checked ? 'true' : 'false');
+            
+            // Live-update the bottom embedded panel instantly when clicked
+            const personaData = calculatePersona();
+            document.getElementById('cardPersonaTitle').innerText = personaData.title;
+            document.getElementById('cardCheckedCounter').innerText = `${personaData.count} / 14 Done`;
         }
 
         // Accessibility Keyboard Input Support (Spacebar/Enter triggers change)
@@ -525,108 +542,168 @@
             }
         }
 
-        // Canvas Generation Engine Wrapper Execution Loop 
-        // Global variable to temporarily store the generated blob for sharing
-		let generatedBlob = null;
-		let generatedFileName = "";
+        // Dynamic Spotify Persona Logic Evaluator (With Ultimate Title Added)
+        function calculatePersona() {
+            const allItems = Array.from(document.querySelectorAll('.checklist-grid .item'));
+            const totalCount = allItems.filter(item => item.classList.contains('checked')).length;
+            
+            // 1. Ultimate Check: Anyone who managed to complete absolutely everything
+            if (totalCount === 14) {
+                return { title: "The Ultimate Finalist", count: 14 };
+            }
+            
+            if (totalCount === 0) return { title: "The Low-key Intern", count: 0 };
+            
+            let crusader = 0;
+            let scholar = 0;
+            let butterfly = 0;
+            
+            allItems.forEach((item, index) => {
+                const itemNumber = index + 1;
+                if (item.classList.contains('checked')) {
+                    if ([1, 3, 6, 7, 8, 9, 11].includes(itemNumber)) crusader++;
+                    else if ([4, 5, 14].includes(itemNumber)) scholar++;
+                    else if ([2, 10, 12, 13].includes(itemNumber)) butterfly++;
+                }
+            });
+            
+            let bestTitle = "The Workspace Crusader";
+            let max = crusader;
+            
+            if (scholar > max) { bestTitle = "The Elite Scholar"; max = scholar; }
+            if (butterfly > max) { bestTitle = "The Social Butterfly"; }
+            
+            return { title: bestTitle, count: totalCount };
+        }
 
-		function downloadChecklist() {
-			const inputField = document.getElementById('slackIdInput');
-			const slackId = inputField.value.trim();
-			const errorTxt = document.getElementById('errorTxt');
+        // Streamlined Single-Canvas Generation Engine
+        function downloadChecklist() {
+            const inputField = document.getElementById('slackIdInput');
+            const slackId = inputField.value.trim();
+            const errorTxt = document.getElementById('errorTxt');
 
-			if (!slackId) {
-				errorTxt.style.display = 'block';
-				inputField.style.borderColor = '#dc2626';
-				inputField.focus();
-				return;
-			}
+            if (!slackId) {
+                errorTxt.style.display = 'block';
+                inputField.style.borderColor = '#dc2626';
+                inputField.focus();
+                return;
+            }
 
-			errorTxt.style.display = 'none';
-			const card = document.getElementById('checklistCard');
-			
-			const options = {
-				scale: 2, 
-				useCORS: true,
-				backgroundColor: null 
-			};
+            errorTxt.style.display = 'none';
+            
+            const personaData = calculatePersona();
+            document.getElementById('assignedBadge').innerText = personaData.title;
+            
+            // Set global text template for sharing/copying
+            finalCaptionText = `I was "${personaData.title}" in HNG i14! 🚀\nSign up at https://hng.tech/internship`;
+            document.getElementById('captionText').innerText = finalCaptionText;
 
-			html2canvas(card, options).then(canvas => {
-				// 1. Process for standard auto-download
-				const image = canvas.toDataURL('image/png');
-				const link = document.createElement('a');
-				generatedFileName = `${slackId}-hngi14-checklist.png`;
-				link.download = generatedFileName;
-				link.href = image;
-				link.click();
+            const originalCard = document.getElementById('checklistCard');
+            const options = { scale: 2, useCORS: true, backgroundColor: null };
 
-				// 2. Convert canvas to Blob data so the native Share API can read it as a real file object
-				canvas.toBlob(blob => {
-					generatedBlob = blob;
-					openModal();
-				}, 'image/png');
-			});
-		}
+            // Render Consolidated Checklist Card Asset
+            html2canvas(originalCard, options).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const downloadLink = document.createElement('a');
+                generatedFileName = `${slackId}-hng14-checklist.png`;
+                
+                downloadLink.download = generatedFileName;
+                downloadLink.href = imgData;
+                downloadLink.click();
 
-		function openModal() {
-			const modal = document.getElementById('successModal');
-			const shareBtn = document.getElementById('shareBtn');
-			const modalMsg = document.getElementById('modalMessage');
+                // Convert to blob data type to support file sharing systems
+                canvas.toBlob(blob => {
+                    checklistBlob = blob;
+                    openModal();
+                }, 'image/png');
+            });
+        }
 
-			modal.classList.add('active');
+        function openModal() {
+            const modal = document.getElementById('successModal');
+            const shareBtn = document.getElementById('shareBtn');
+            const modalMsg = document.getElementById('modalMessage');
 
-			// Check if browser natively supports sharing files
-			if (navigator.canShare && navigator.share && generatedBlob) {
-				const file = new File([generatedBlob], generatedFileName, { type: 'image/png' });
-				if (navigator.canShare({ files: [file] })) {
-					shareBtn.innerText = "Share Image & Caption";
-					modalMsg.innerText = "Your graphic has been saved! Tap below to post directly to your status or feed.";
-					return;
-				}
-			}
-			
-			// Fallback display text if native file sharing isn't supported on their machine
-			shareBtn.innerText = "Copy Caption Text";
-			modalMsg.innerText = "Your graphic has been saved! Copy the caption below to paste along with your image.";
-		}
+            modal.classList.add('active');
+            shareBtn.innerText = "Share to Socials"; // Text updated to reflect new share intent
+            
+            if (modalMsg) {
+                modalMsg.innerText = "Your checklist has been saved! Click below to natively share your image directly to your social applications.";
+            }
+        }
 
-		function closeModal() {
-			document.getElementById('successModal').classList.remove('active');
-		}
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
 
-		async function handleSocialShare() {
-			const caption = document.getElementById('captionText').innerText;
+		// Native System Share Controller
+        async function handleSocialShare() {
+            const shareBtn = document.getElementById('shareBtn');
 
-			// Mobile/Native sharing route
-			if (navigator.share && generatedBlob) {
-				try {
-					const file = new File([generatedBlob], generatedFileName, { type: 'image/png' });
-					await navigator.share({
-						files: [file],
-						text: caption,
-						title: 'My HNG i14 Journey'
-					});
-					return;
-				} catch (err) {
-					// Ignore abort errors if user just cancelled the sheet window
-					if(err.name !== 'AbortError') console.error('Share failed:', err);
-				}
-			}
+            if (!checklistBlob) {
+                alert("Image asset not completely loaded yet. Please try again!");
+                return;
+            }
 
-			// Desktop/Fallback route: Copy text to clipboard instead
-			try {
-				await navigator.clipboard.writeText(caption);
-				const shareBtn = document.getElementById('shareBtn');
-				shareBtn.innerText = "Copied! ✓";
-				shareBtn.style.backgroundColor = "#1da34b"; // Turn green briefly on copy
-				setTimeout(() => {
-					shareBtn.innerText = "Copy Caption Text";
-					shareBtn.style.backgroundColor = "var(--brand-orange)";
-				}, 2000);
-			} catch (err) {
-				alert("Failed to copy caption automatically. Please select the text manually!");
-			}
-		}
+            // STEP 1: Always copy the text caption to the clipboard instantly as a safety net
+            try {
+                await navigator.clipboard.writeText(finalCaptionText);
+                console.log("Caption safely buffered to clipboard.");
+            } catch (err) {
+                console.error("Clipboard copy failed:", err);
+            }
+
+            // Create shareable file structure out of blob image data
+            const shareFile = new File([checklistBlob], generatedFileName, { type: 'image/png' });
+
+            // STEP 2: Trigger the actual System Share Menu
+            if (navigator.canShare && navigator.share && navigator.canShare({ files: [shareFile] })) {
+                
+                // Change button text to give immediate visual feedback
+                const originalText = shareBtn.innerText;
+                shareBtn.innerText = "Caption Copied";
+                shareBtn.style.backgroundColor = "#1da34b"; // Turn success green
+
+                try {
+                    // This pulls up the native Windows/Mac/iOS/Android share dialogue box
+                    await navigator.share({
+                        files: [shareFile],
+                        text: finalCaptionText,
+                        title: 'My HNG i14 Checklist'
+                    });
+                    
+                    // Revert button back after a short delay
+                    setTimeout(() => {
+                        shareBtn.innerText = originalText;
+                        shareBtn.style.backgroundColor = "var(--hng-blue)";
+                    }, 2500);
+                    
+                    return;
+                } catch (err) {
+                    // Revert button back if they close the system share box without sharing
+                    shareBtn.innerText = originalText;
+                    shareBtn.style.backgroundColor = "var(--hng-blue)";
+                    if (err.name !== 'AbortError') console.error('Native share failed:', err);
+                    return;
+                }
+            }
+
+            // STEP 3: Fallback UI text for older browsers that don't support system sharing
+            shareBtn.innerText = "Caption Copied! Paste on Socials ✓";
+            shareBtn.style.backgroundColor = "#1da34b";
+            
+            setTimeout(() => {
+                shareBtn.innerText = "Share to Socials";
+                shareBtn.style.backgroundColor = "var(--hng-blue)";
+            }, 3500);
+        }
+
+        // Initialize the badge stats automatically as soon as the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialPersona = calculatePersona();
+            document.getElementById('cardPersonaTitle').innerText = initialPersona.title;
+            document.getElementById('cardCheckedCounter').innerText = `${initialPersona.count} / 14 Done`;
+        });
     </script>
 
 </body>
