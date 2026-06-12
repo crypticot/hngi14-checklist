@@ -695,27 +695,10 @@
                     <div class="checkbox"></div>
                     <div class="item-text">Topped the scoresheet</div>
                 </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Failed a Stage</div>
-                </div>
-
                 <div class="category-header">Work</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Pushed to production by mistake</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
                     <div class="item-text">Fixed a bug at 2AM</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Said "works on my machine"</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Broke the staging server</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -766,10 +749,6 @@
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Almost ran mad</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Actually ran mad</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -828,7 +807,7 @@
 
             <div class="embedded-checklist-badge">
                 <div id="cardPersonaTitle" class="embedded-badge-title">The Low-key Intern</div>
-                <div id="cardCheckedCounter" class="embedded-badge-count">0 / 31 Done</div>
+                <div id="cardCheckedCounter" class="embedded-badge-count">0 / 26 Done</div>
             </div>
 
             <div class="footer">
@@ -912,7 +891,7 @@
             }
 
             const counterEl = document.getElementById('cardCheckedCounter');
-            counterEl.innerText = `${titleData.count} / 31 Done`;
+            counterEl.innerText = `${titleData.count} / 26 Done`;
             counterEl.classList.remove('counter-pulse');
             void counterEl.offsetWidth;
             counterEl.classList.add('counter-pulse');
@@ -969,11 +948,11 @@
             const allItems = Array.from(document.querySelectorAll('.checklist-grid .item'));
             const totalCount = allItems.filter(item => item.classList.contains('checked')).length;
             
-            if (totalCount >= 29) return { title: "The HNG Deity", count: totalCount };
-            if (totalCount >= 25) return { title: "The Legend", count: totalCount };
-            if (totalCount >= 18) return { title: "The Grinder", count: totalCount };
-            if (totalCount >= 12) return { title: "The Survivor", count: totalCount };
-            if (totalCount >= 5) return { title: "The Explorer", count: totalCount };
+            if (totalCount >= 25) return { title: "The HNG Deity", count: totalCount };
+            if (totalCount >= 20) return { title: "The Legend", count: totalCount };
+            if (totalCount >= 14) return { title: "The Grinder", count: totalCount };
+            if (totalCount >= 9) return { title: "The Survivor", count: totalCount };
+            if (totalCount >= 4) return { title: "The Explorer", count: totalCount };
             return { title: "The Low-key Intern", count: totalCount };
         }
 
@@ -990,11 +969,11 @@
             allItems.forEach((item, index) => {
                 const itemNumber = index + 1;
                 if (!item.classList.contains('checked')) return;
-                if ([28, 29, 30].includes(itemNumber)) badges['top-performer'] = true;
-                if ([16, 17].includes(itemNumber)) badges['team-player'] = true;
-                if ([1, 7].includes(itemNumber)) badges['sleep-sacrificer'] = true;
-                if ([9, 27].includes(itemNumber)) badges['bug-hunter'] = true;
-                if ([5, 26, 31].includes(itemNumber)) badges['stage-survivor'] = true;
+                if ([23, 24, 25].includes(itemNumber)) badges['top-performer'] = true;
+                if ([12, 13].includes(itemNumber)) badges['team-player'] = true;
+                if ([1, 5].includes(itemNumber)) badges['sleep-sacrificer'] = true;
+                if ([22].includes(itemNumber)) badges['bug-hunter'] = true;
+                if ([21, 26].includes(itemNumber)) badges['stage-survivor'] = true;
             });
 
             Object.keys(badges).forEach(key => {
@@ -1135,7 +1114,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             const initialTitle = calculateTitle();
             document.getElementById('cardPersonaTitle').innerText = initialTitle.title;
-            document.getElementById('cardCheckedCounter').innerText = `${initialTitle.count} / 31 Done`;
+            document.getElementById('cardCheckedCounter').innerText = `${initialTitle.count} / 26 Done`;
             calculateBadges();
         });
     </script>
