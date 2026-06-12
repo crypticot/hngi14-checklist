@@ -14,11 +14,12 @@
     
 <style>
         :root {
-            --hng-blue: #00a3ff; /* Electric blue sourced directly from image assets */
-            --card-bg: #030914;  /* Ultra-dark canvas for WCAG AAA contrast compliance */
+            --hng-blue: #00BFFF;
+            --card-bg: #030914;
             --text-light: #ffffff;
-            --text-muted: #b0c4de; 
-            --success-blue: #00a3ff; 
+            --text-muted: #b0c4de;
+            --success-blue: #00BFFF;
+            --glow: 0 0 12px rgba(0, 191, 255, 0.5);
         }
 
         body {
@@ -91,12 +92,12 @@
             width: 680px;
             min-height: 960px; 
             background-color: var(--card-bg);
-            background-image: linear-gradient(180deg, #061530 0%, #02070f 100%);
+            background-image: linear-gradient(180deg, #021b45, #001029, #000814);
             border: 4px solid var(--hng-blue);
             padding: 60px 50px 45px 50px;
             box-sizing: border-box;
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(0, 191, 255, 0.15);
             display: flex;
             flex-direction: column;
             color: var(--text-light);
@@ -135,6 +136,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--hng-blue);
+            box-shadow: var(--glow);
             flex-shrink: 0;
         }
 
@@ -191,7 +193,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 163, 255, 0.15);
+            background: rgba(0, 191, 255, 0.15);
             border: 1px solid var(--hng-blue);
             padding: 6px 16px;
             height: 32px;
@@ -253,8 +255,8 @@
         }
 
         .item:hover, .item:focus-visible {
-            background: rgba(0, 163, 255, 0.08);
-            border-color: rgba(0, 163, 255, 0.4);
+            background: rgba(0, 191, 255, 0.08);
+            border-color: rgba(0, 191, 255, 0.4);
             outline: none;
         }
 
@@ -276,6 +278,7 @@
         .item.checked .checkbox {
             background-color: var(--success-blue);
             border-color: var(--success-blue);
+            box-shadow: var(--glow);
         }
 
         .checkbox::after {
@@ -362,8 +365,8 @@
             font-size: 16px;
             font-weight: 700;
             color: #bae6fd;
-            background: rgba(0, 163, 255, 0.2);
-            border: 1px solid rgba(0, 163, 255, 0.4);
+            background: rgba(0, 191, 255, 0.2);
+            border: 1px solid rgba(0, 191, 255, 0.4);
             padding: 6px 14px;
             border-radius: 20px;
             white-space: nowrap;
@@ -391,9 +394,10 @@
         }
 
         .achievement-badge.unlocked {
-            background: rgba(0, 163, 255, 0.15);
+            background: rgba(0, 191, 255, 0.15);
             border-color: var(--hng-blue);
             color: var(--text-light);
+            box-shadow: 0 0 8px rgba(0, 191, 255, 0.3);
         }
 
         /* Footer & Compliance Links */
@@ -419,27 +423,31 @@
 
         /* Action Buttons */
         .download-btn {
+            width: 100%;
+            max-width: 680px;
             margin-top: 24px;
             margin-bottom: 40px;
-            padding: 16px 40px;
-            background-color: var(--hng-blue);
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #00BFFF, #008be3);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 16px;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 17px;
+            font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0, 163, 255, 0.4);
-            transition: transform 0.1s ease, background-color 0.2s;
+            letter-spacing: 0.3px;
+            box-shadow: 0 6px 24px rgba(0, 191, 255, 0.45), var(--glow);
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
         }
 
         .download-btn:hover {
-            background-color: #008be3;
+            box-shadow: 0 8px 32px rgba(0, 191, 255, 0.6), 0 0 24px rgba(0, 191, 255, 0.4);
+            transform: translateY(-1px);
         }
 
         .download-btn:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
 		/* DYNAMIC RESPONSIVE MOBILE SCALING */
@@ -726,7 +734,7 @@
         </div>
     </div>
 
-    <button class="download-btn" onclick="downloadChecklist()">Download Checklist</button>
+    <button class="download-btn" onclick="downloadChecklist()">&#11015; Download My HNG14 Story</button>
 
     <div id="successModal" class="modal-overlay">
         <div class="modal-content">
@@ -815,7 +823,7 @@
             const elRect = element.getBoundingClientRect();
             const cx = elRect.left - cardRect.left + elRect.width / 2;
             const cy = elRect.top - cardRect.top + elRect.height / 2;
-            const colors = ['#00a3ff', '#ffffff', '#bae6fd', '#1da34b', '#ffd93d', '#ff6b6b'];
+            const colors = ['#00BFFF', '#ffffff', '#bae6fd', '#1da34b', '#ffd93d', '#ff6b6b'];
 
             for (let i = 0; i < 14; i++) {
                 const particle = document.createElement('span');
