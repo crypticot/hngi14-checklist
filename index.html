@@ -343,6 +343,33 @@
             white-space: nowrap;
         }
 
+        .achievement-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        .achievement-badge {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge.unlocked {
+            background: rgba(0, 163, 255, 0.15);
+            border-color: var(--hng-blue);
+            color: var(--text-light);
+        }
+
         /* Footer & Compliance Links */
         .footer {
             text-align: center;
@@ -508,7 +535,7 @@
                         <div class="profile-team">Team Alpha</div>
                     </div>
                 </div>
-                <h1>14 Things in HNG 14</h1>
+                <h1>The HNG i14 Experience</h1>
                 <p>What kind of intern were you? 🚀</p>
             </div>
 
@@ -536,6 +563,28 @@
                     <div class="item-text">Failed a Stage</div>
                 </div>
 
+                <div class="category-header">Work</div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Pushed to production by mistake</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Fixed a bug at 2AM</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Said "works on my machine"</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Broke the staging server</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Asked for an extension</div>
+                </div>
+
                 <div class="category-header">Social Life</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -552,6 +601,24 @@
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Received an award</div>
+                </div>
+
+                <div class="category-header">Communication</div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Sent a message and deleted it immediately</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Got tagged by a mentor</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Opened a huddle by mistake</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Spoke during standup with muted mic</div>
                 </div>
 
                 <div class="category-header">Survival Mode</div>
@@ -576,11 +643,55 @@
                     <div class="item-text">Deported to #yakubu-manage</div>
                 </div>
 
+                <div class="category-header">Emotional Damage</div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Thought of quitting</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Re-read feedback 10 times</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Celebrated passing a stage</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Cried over a bug</div>
+                </div>
+
+                <div class="category-header">Legendary Tier</div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Won a task</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Received public recognition</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Became a team lead</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Survived all stages</div>
+                </div>
+
+            </div>
+
+            <div class="achievement-badges" id="achievementBadges">
+                <span class="achievement-badge locked" data-badge="top-performer">&#127942; Top Performer</span>
+                <span class="achievement-badge locked" data-badge="team-player">&#129309; Team Player</span>
+                <span class="achievement-badge locked" data-badge="sleep-sacrificer">&#128564; Sleep Sacrificer</span>
+                <span class="achievement-badge locked" data-badge="bug-hunter">&#128027; Bug Hunter</span>
+                <span class="achievement-badge locked" data-badge="stage-survivor">&#128128; Stage Survivor</span>
             </div>
 
             <div class="embedded-checklist-badge">
-                <div id="cardPersonaTitle" class="embedded-badge-title">The Workspace Crusader</div>
-                <div id="cardCheckedCounter" class="embedded-badge-count">0 / 14 Done</div>
+                <div id="cardPersonaTitle" class="embedded-badge-title">The Low-key Intern</div>
+                <div id="cardCheckedCounter" class="embedded-badge-count">0 / 31 Done</div>
             </div>
 
             <div class="footer">
@@ -648,10 +759,10 @@
             const checked = element.classList.contains('checked');
             element.setAttribute('aria-checked', checked ? 'true' : 'false');
             
-            // Live-update the bottom embedded panel instantly when clicked
-            const personaData = calculatePersona();
-            document.getElementById('cardPersonaTitle').innerText = personaData.title;
-            document.getElementById('cardCheckedCounter').innerText = `${personaData.count} / 14 Done`;
+            const titleData = calculateTitle();
+            document.getElementById('cardPersonaTitle').innerText = titleData.title;
+            document.getElementById('cardCheckedCounter').innerText = `${titleData.count} / 31 Done`;
+            calculateBadges();
         }
 
         // Accessibility Keyboard Input Support (Spacebar/Enter triggers change)
@@ -662,38 +773,48 @@
             }
         }
 
-        // Dynamic Spotify Persona Logic Evaluator (With Ultimate Title Added)
-        function calculatePersona() {
+        function calculateTitle() {
             const allItems = Array.from(document.querySelectorAll('.checklist-grid .item'));
             const totalCount = allItems.filter(item => item.classList.contains('checked')).length;
             
-            // 1. Ultimate Check: Anyone who managed to complete absolutely everything
-            if (totalCount === 14) {
-                return { title: "The Ultimate Finalist", count: 14 };
-            }
-            
-            if (totalCount === 0) return { title: "The Low-key Intern", count: 0 };
-            
-            let crusader = 0;
-            let scholar = 0;
-            let butterfly = 0;
-            
+            if (totalCount >= 29) return { title: "The HNG Deity", count: totalCount };
+            if (totalCount >= 25) return { title: "The Legend", count: totalCount };
+            if (totalCount >= 18) return { title: "The Grinder", count: totalCount };
+            if (totalCount >= 12) return { title: "The Survivor", count: totalCount };
+            if (totalCount >= 5) return { title: "The Explorer", count: totalCount };
+            return { title: "The Low-key Intern", count: totalCount };
+        }
+
+        function calculateBadges() {
+            const allItems = Array.from(document.querySelectorAll('.checklist-grid .item'));
+            const badges = {
+                'top-performer': false,
+                'team-player': false,
+                'sleep-sacrificer': false,
+                'bug-hunter': false,
+                'stage-survivor': false
+            };
+
             allItems.forEach((item, index) => {
                 const itemNumber = index + 1;
-                if (item.classList.contains('checked')) {
-                    if ([1, 2, 5, 10, 11, 12, 13].includes(itemNumber)) crusader++;
-                    else if ([3, 4, 9].includes(itemNumber)) scholar++;
-                    else if ([6, 7, 8, 14].includes(itemNumber)) butterfly++;
+                if (!item.classList.contains('checked')) return;
+                if ([28, 29, 30].includes(itemNumber)) badges['top-performer'] = true;
+                if ([16, 17].includes(itemNumber)) badges['team-player'] = true;
+                if ([1, 7].includes(itemNumber)) badges['sleep-sacrificer'] = true;
+                if ([9, 27].includes(itemNumber)) badges['bug-hunter'] = true;
+                if ([5, 26, 31].includes(itemNumber)) badges['stage-survivor'] = true;
+            });
+
+            Object.keys(badges).forEach(key => {
+                const el = document.querySelector(`.achievement-badge[data-badge="${key}"]`);
+                if (badges[key]) {
+                    el.classList.add('unlocked');
+                    el.classList.remove('locked');
+                } else {
+                    el.classList.add('locked');
+                    el.classList.remove('unlocked');
                 }
             });
-            
-            let bestTitle = "The Workspace Crusader";
-            let max = crusader;
-            
-            if (scholar > max) { bestTitle = "The Elite Scholar"; max = scholar; }
-            if (butterfly > max) { bestTitle = "The Social Butterfly"; }
-            
-            return { title: bestTitle, count: totalCount };
         }
 
         // Streamlined Single-Canvas Generation Engine
@@ -711,11 +832,11 @@
 
             errorTxt.style.display = 'none';
             
-            const personaData = calculatePersona();
-            document.getElementById('assignedBadge').innerText = personaData.title;
+            const titleData = calculateTitle();
+            document.getElementById('assignedBadge').innerText = titleData.title;
             
             // Set global text template for sharing/copying
-            finalCaptionText = `I was "${personaData.title}" in HNG i14! 🚀\nSign up at https://hng.tech/internship`;
+            finalCaptionText = `I was "${titleData.title}" in HNG i14! 🚀\nSign up at https://hng.tech/internship`;
             document.getElementById('captionText').innerText = finalCaptionText;
 
             const originalCard = document.getElementById('checklistCard');
@@ -820,9 +941,10 @@
 
         // Initialize the badge stats automatically as soon as the page loads
         window.addEventListener('DOMContentLoaded', () => {
-            const initialPersona = calculatePersona();
-            document.getElementById('cardPersonaTitle').innerText = initialPersona.title;
-            document.getElementById('cardCheckedCounter').innerText = `${initialPersona.count} / 14 Done`;
+            const initialTitle = calculateTitle();
+            document.getElementById('cardPersonaTitle').innerText = initialTitle.title;
+            document.getElementById('cardCheckedCounter').innerText = `${initialTitle.count} / 31 Done`;
+            calculateBadges();
         });
     </script>
 
