@@ -305,6 +305,32 @@
             opacity: 0.4;
         }
 
+        .confetti-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 20;
+            border-radius: 2px;
+        }
+
+        @keyframes counterPulse {
+            0% { transform: scale(1); }
+            40% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .counter-pulse {
+            animation: counterPulse 0.35s ease;
+        }
+
+        @keyframes titleFade {
+            0% { opacity: 0; transform: translateY(-4px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .title-updated {
+            animation: titleFade 0.3s ease;
+        }
+
 		/* -----------------------------------------
            NEW: EMBEDDED DYNAMIC WRAPPED PROFILE BADGE
         -------------------------------------------- */
@@ -755,14 +781,69 @@
 
         // Checklist Element Interaction State Changes
         function toggleItem(element) {
+            const wasChecked = element.classList.contains('checked');
             element.classList.toggle('checked');
             const checked = element.classList.contains('checked');
             element.setAttribute('aria-checked', checked ? 'true' : 'false');
-            
+
+            if (checked && !wasChecked) {
+                burstConfetti(element);
+            }
+
             const titleData = calculateTitle();
-            document.getElementById('cardPersonaTitle').innerText = titleData.title;
-            document.getElementById('cardCheckedCounter').innerText = `${titleData.count} / 31 Done`;
+            const titleEl = document.getElementById('cardPersonaTitle');
+            const prevTitle = titleEl.innerText;
+            titleEl.innerText = titleData.title;
+            if (titleData.title !== prevTitle) {
+                titleEl.classList.remove('title-updated');
+                void titleEl.offsetWidth;
+                titleEl.classList.add('title-updated');
+            }
+
+            const counterEl = document.getElementById('cardCheckedCounter');
+            counterEl.innerText = `${titleData.count} / 31 Done`;
+            counterEl.classList.remove('counter-pulse');
+            void counterEl.offsetWidth;
+            counterEl.classList.add('counter-pulse');
+
             calculateBadges();
+        }
+
+        function burstConfetti(element) {
+            const card = document.getElementById('checklistCard');
+            const cardRect = card.getBoundingClientRect();
+            const elRect = element.getBoundingClientRect();
+            const cx = elRect.left - cardRect.left + elRect.width / 2;
+            const cy = elRect.top - cardRect.top + elRect.height / 2;
+            const colors = ['#00a3ff', '#ffffff', '#bae6fd', '#1da34b', '#ffd93d', '#ff6b6b'];
+
+            for (let i = 0; i < 14; i++) {
+                const particle = document.createElement('span');
+                particle.className = 'confetti-particle';
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 30 + Math.random() * 50;
+                const size = 3 + Math.random() * 5;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance;
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${cx}px;
+                    top: ${cy}px;
+                    opacity: 1;
+                    transform: translate(0, 0) rotate(0deg);
+                    transition: all 0.55s cubic-bezier(0,0.7,0.3,1);
+                `;
+                card.appendChild(particle);
+
+                requestAnimationFrame(() => {
+                    particle.style.opacity = '0';
+                    particle.style.transform = `translate(${dx}px, ${dy}px) rotate(${Math.random() * 360}deg)`;
+                });
+
+                setTimeout(() => particle.remove(), 600);
+            }
         }
 
         // Accessibility Keyboard Input Support (Spacebar/Enter triggers change)
