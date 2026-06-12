@@ -89,7 +89,8 @@
            THE CHECKLIST CARD (9:16 Aspect Ratio)
         -------------------------------------------- */
         .checklist-card {
-            width: 680px;
+            width: 100%;
+            max-width: 680px;
             min-height: 960px; 
             background-color: var(--card-bg);
             background-image: linear-gradient(180deg, #021b45, #001029, #000814);
@@ -450,47 +451,148 @@
             transform: scale(0.97);
         }
 
-		/* DYNAMIC RESPONSIVE MOBILE SCALING */
+		/* RESPONSIVE MOBILE LAYOUT */
         @media (max-width: 720px) {
             body {
-                padding: 16px;
+                padding: 12px;
             }
-            .input-container, .download-btn {
-                max-width: calc(680px * 0.52);
-                width: 100%;
+            .input-container {
+                max-width: 100%;
             }
-            /* UPDATED WRAPPER: Pushes card down cleanly on mid-size mobile devices */
             .card-wrapper {
-                height: calc(960px * 0.52); 
-                padding-top: 36px; /* Fixes the overlap spacing gap */
-                margin-bottom: 20px;
-                display: grid;
-                place-items: center;
-                box-sizing: content-box; /* Protects height calculations */
+                width: 100%;
+                max-width: 680px;
+                overflow: visible;
             }
             .checklist-card {
-                transform: scale(0.52); 
-                transform-origin: top center;
-                margin: 0 auto;
+                width: 100%;
+                padding: 40px 24px 30px 24px;
+                min-height: auto;
+                border-radius: 20px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .header p {
+                font-size: 14px;
+            }
+            .checklist-grid {
+                gap: 10px;
+            }
+            .item {
+                padding: 14px 12px;
+            }
+            .item-text {
+                font-size: 13px;
+            }
+            .download-btn {
+                max-width: 100%;
+                font-size: 15px;
+                padding: 16px 30px;
+            }
+            .profile-photo {
+                width: 64px;
+                height: 64px;
+            }
+            .profile-name {
+                font-size: 17px;
+            }
+            .profile-role {
+                font-size: 13px;
+            }
+            .embedded-checklist-badge {
+                padding: 14px 16px;
+                margin-top: 24px;
+            }
+            .embedded-badge-title {
+                font-size: 18px;
+            }
+            .embedded-badge-count {
+                font-size: 14px;
             }
         }
 
-        @media (max-width: 400px) {
-            .input-container, .download-btn {
-                max-width: calc(680px * 0.43);
-            }
-            /* UPDATED WRAPPER: Pushes card down cleanly on small mobile devices */
-            .card-wrapper {
-                height: calc(960px * 0.43);
-                padding-top: 36px; /* Fixes the overlap spacing gap */
-                display: grid;
-                place-items: center;
-                box-sizing: content-box; /* Protects height calculations */
+        @media (max-width: 500px) {
+            .checklist-grid {
+                grid-template-columns: 1fr !important;
+                gap: 8px;
             }
             .checklist-card {
-                transform: scale(0.43);
-                transform-origin: top center;
-                margin: 0 auto;
+                padding: 28px 16px 20px 16px;
+                border-width: 3px;
+            }
+            .header {
+                margin-bottom: 28px;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+            .header p {
+                font-size: 12px;
+            }
+            .item {
+                padding: 12px 10px;
+            }
+            .item-text {
+                font-size: 12px;
+            }
+            .category-header {
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+            .checkbox {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+            }
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            .profile-info {
+                align-items: center;
+            }
+            .profile-photo {
+                width: 56px;
+                height: 56px;
+            }
+            .profile-name {
+                font-size: 15px;
+            }
+            .achievement-badges {
+                gap: 4px;
+                margin-top: 14px;
+            }
+            .achievement-badge {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+            .download-btn {
+                font-size: 14px;
+                padding: 14px 24px;
+                border-radius: 14px;
+            }
+            .embedded-checklist-badge {
+                padding: 12px 14px;
+                margin-top: 18px;
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
+            }
+            .embedded-badge-title {
+                font-size: 16px;
+            }
+            .embedded-badge-count {
+                font-size: 13px;
+            }
+            .footer {
+                font-size: 12px;
+                padding-top: 14px;
+                margin-top: 18px;
+            }
+            .confetti-particle {
+                display: none;
             }
         }
         
@@ -556,6 +658,7 @@
 
         <label for="photoInput" style="display: block; text-align: center; margin-top: 16px; margin-bottom: 6px;">Upload Your Photo (optional):</label>
         <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(this)" style="text-align: center; padding: 10px 16px; font-family: 'DM Sans', sans-serif;">
+
     </div>
 
     <div class="card-wrapper">
