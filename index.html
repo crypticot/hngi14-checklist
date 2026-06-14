@@ -267,6 +267,13 @@
             flex-grow: 1;
             align-content: start;
         }
+		
+		#checklistGroup1, #checklistGroup2, #checklistGroup3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 16px;
+            grid-column: 1 / -1;
+        }
 
         .category-header {
             grid-column: 1 / -1;
@@ -395,7 +402,7 @@
             align-items: center;
             box-sizing: border-box;
             width: 100%;
-            min-height: 70px; /* 🚀 Added structural anchor to prevent mobile scaling collapse */
+            min-height: 70px; /* Added structural anchor to prevent mobile scaling collapse */
         }
 
         .embedded-badge-title {
@@ -496,6 +503,57 @@
             transform: scale(0.97);
         }
 
+        /* -----------------------------------------
+           VERDICT CARD (hidden on live page, capture-only)
+        -------------------------------------------- */
+        #verdictCard {
+            display: none;
+        }
+
+        .verdict-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px 0 10px 0;
+        }
+
+		.verdict-persona {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 54px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            color: var(--hng-blue);
+            margin: 0 0 18px 0;
+            text-shadow: 0 0 30px rgba(0, 191, 255, 0.5), 0 0 60px rgba(0, 191, 255, 0.25);
+        }
+
+        .verdict-tagline {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin: 0 0 36px 0;
+            max-width: 480px;
+            line-height: 1.5;
+        }
+
+        .verdict-stat {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            background: rgba(0, 191, 255, 0.12);
+            border: 1px solid var(--hng-blue);
+            padding: 12px 28px;
+            border-radius: 30px;
+            box-shadow: var(--glow);
+        }
+
 		/* RESPONSIVE MOBILE LAYOUT */
         @media (max-width: 720px) {
             body {
@@ -554,6 +612,16 @@
             }
             .embedded-badge-count {
                 font-size: 14px;
+            }
+            .verdict-persona {
+                font-size: 40px;
+            }
+            .verdict-tagline {
+                font-size: 15px;
+            }
+            .verdict-stat {
+                font-size: 14px;
+                padding: 10px 22px;
             }
         }
 
@@ -648,6 +716,18 @@
             .confetti-particle {
                 display: none;
             }
+            .verdict-persona {
+                font-size: 30px;
+            }
+            .verdict-tagline {
+                font-size: 13px;
+                margin-bottom: 24px;
+            }
+            .verdict-stat {
+                font-size: 12px;
+                padding: 8px 18px;
+                letter-spacing: 1px;
+            }
         }
         
         /* Success Modal Overlay */
@@ -713,11 +793,11 @@
         <div class="inline-fields">
             <div class="inline-field">
                 <label for="trackInput">Track</label>
-                <input type="text" id="trackInput" placeholder="Frontend Intern" oninput="syncTrack(this.value)">
+                <input type="text" id="trackInput" placeholder="Sales and Marketing" oninput="syncTrack(this.value)">
             </div>
             <div class="inline-field">
                 <label for="teamInput">Team</label>
-                <input type="text" id="teamInput" placeholder="Team Alpha" oninput="syncTeam(this.value)">
+                <input type="text" id="teamInput" placeholder="Team Social Badge" oninput="syncTeam(this.value)">
             </div>
         </div>
 
@@ -732,18 +812,19 @@
                 <div id="profileSection" class="profile-section no-photo">
                     <img id="profilePhoto" class="profile-photo" src="" alt="Profile Photo">
                     <div class="profile-info">
-                        <div id="slackDisplay" class="profile-name">@Slack_ID</div>
-                        <div class="profile-role">Frontend Intern</div>
-                        <div class="profile-team">Team Alpha</div>
+                        <div id="slackDisplay" class="profile-name">@Mebud</div>
+                        <div class="profile-role">Sales and Marketing</div>
+                        <div class="profile-team">Team Social Badge</div>
                     </div>
                 </div>
                 <h1>The HNG i14 Experience</h1>
-                <p>What kind of intern were you? 🚀</p>
+                <p id="headerSubtitle">What kind of intern were you?</p>
             </div>
 
             <div class="checklist-grid">
                 
-                <div class="category-header">Work Life</div>
+				<div id="checklistGroup1">
+                <div class="category-header">The Grind</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Stayed up all night on a task</div>
@@ -758,19 +839,38 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Topped the scoresheet</div>
-                </div>
-                <div class="category-header">Work</div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Fixed a bug at 2AM</div>
+                    <div class="item-text">Fixed a bug/issue at 2AM</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Asked for an extension</div>
                 </div>
+				<div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Re-read a task 10 times</div>
+                </div>
 
-                <div class="category-header">Social Life</div>
+                <div class="category-header">Survival Mode</div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Fell sick</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Almost ran mad</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Thought of quitting</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
+                    <div class="item-text">Cried over a task</div>
+                </div>
+				</div>
+
+                <div id="checklistGroup2">
+                <div class="category-header">Community Vibes</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Made great friends</div>
@@ -785,35 +885,17 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Received an award</div>
+                    <div class="item-text">Spoke directly with a mentor</div>
                 </div>
 
-                <div class="category-header">Communication</div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Sent a message and deleted it immediately</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Got tagged by a mentor</div>
-                </div>
+                <div class="category-header">Slack Chronicles</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Opened a huddle by mistake</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Spoke during standup with muted mic</div>
-                </div>
-
-                <div class="category-header">Survival Mode</div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Fell sick</div>
-                </div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Almost ran mad</div>
+                    <div class="item-text">Spoke during a call with muted mic</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -823,15 +905,17 @@
                     <div class="checkbox"></div>
                     <div class="item-text">Deported to #yakubu-manage</div>
                 </div>
+				</div>
 
-                <div class="category-header">Emotional Damage</div>
+                <div id="checklistGroup3">
+                <div class="category-header">The Scoreboards</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Thought of quitting</div>
+                    <div class="item-text">Got a -0.5 in check-in</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Re-read feedback 10 times</div>
+                    <div class="item-text">Aced a check-in</div>
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
@@ -839,14 +923,10 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
-                    <div class="item-text">Cried over a bug</div>
+                    <div class="item-text">Topped a scoresheet</div>
                 </div>
 
-                <div class="category-header">Legendary Tier</div>
-                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
-                    <div class="checkbox"></div>
-                    <div class="item-text">Won a task</div>
-                </div>
+                <div class="category-header">Hall of Fame</div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
                     <div class="item-text">Received public recognition</div>
@@ -857,17 +937,22 @@
                 </div>
                 <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
                     <div class="checkbox"></div>
+                    <div class="item-text">Received an award</div>
+                </div>
+                <div class="item" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleItem(this)" onkeydown="handleKey(event, this)">
+                    <div class="checkbox"></div>
                     <div class="item-text">Survived all stages</div>
                 </div>
 
             </div>
+			</div>
 
             <div class="achievement-badges" id="achievementBadges">
-                <span class="achievement-badge locked" data-badge="top-performer">&#127942; Top Performer</span>
-                <span class="achievement-badge locked" data-badge="team-player">&#129309; Team Player</span>
-                <span class="achievement-badge locked" data-badge="sleep-sacrificer">&#128564; Sleep Sacrificer</span>
-                <span class="achievement-badge locked" data-badge="bug-hunter">&#128027; Bug Hunter</span>
-                <span class="achievement-badge locked" data-badge="stage-survivor">&#128128; Stage Survivor</span>
+                <span class="achievement-badge" data-badge="top-performer">&#127942; Top Performer</span>
+                <span class="achievement-badge" data-badge="team-player">&#129309; Team Player</span>
+                <span class="achievement-badge" data-badge="sleep-sacrificer">&#128564; Sleep Sacrificer</span>
+                <span class="achievement-badge" data-badge="bug-hunter">&#128027; Bug Hunter</span>
+                <span class="achievement-badge" data-badge="stage-survivor">&#128128; Stage Survivor</span>
             </div>
 
             <div class="embedded-checklist-badge">
@@ -876,12 +961,48 @@
             </div>
 
             <div class="footer">
-                Powered by <a id="brandLink" href="https://flaretag.hng14.com" target="_blank" rel="noopener">Flare Tag</a>
+                Brought to you by The <a id="brandLink" href="https://flaretag.hng14.com" target="_blank" rel="noopener">Flare Tag</a> Marketing Team
             </div>
         </div>
     </div>
 
-    <button class="download-btn" onclick="downloadChecklist()">&#11015; Download My HNG14 Story</button>
+    <!-- VERDICT CARD: hidden on the live page, only shown during image capture -->
+    <div class="card-wrapper">
+        <div id="verdictCard" class="checklist-card">
+            <div class="header">
+                <div class="profile-section no-photo" id="verdictProfileSection">
+                    <img class="profile-photo" id="verdictProfilePhoto" src="" alt="Profile Photo">
+                    <div class="profile-info">
+                        <div class="profile-name" id="verdictSlackDisplay">@Slack_ID</div>
+                        <div class="profile-role" id="verdictRole">Sales and Marketing</div>
+                        <div class="profile-team" id="verdictTeam">Team Social Badge</div>
+                    </div>
+                </div>
+                <h1>The HNG i14 Experience</h1>
+                <p>Here's the verdict:</p>
+            </div>
+
+            <div class="verdict-body">
+                <div class="verdict-persona" id="verdictPersona">The Grinder</div>
+                <div class="verdict-tagline" id="verdictTagline">Head down, no days off.</div>
+                <div class="verdict-stat" id="verdictStat">18 OUT OF 26 COMPLETED</div>
+            </div>
+
+            <div class="achievement-badges" id="verdictAchievementBadges">
+                <span class="achievement-badge" data-badge="top-performer">&#127942; Top Performer</span>
+                <span class="achievement-badge" data-badge="team-player">&#129309; Team Player</span>
+                <span class="achievement-badge" data-badge="sleep-sacrificer">&#128564; Sleep Sacrificer</span>
+                <span class="achievement-badge" data-badge="bug-hunter">&#128027; Bug Hunter</span>
+                <span class="achievement-badge" data-badge="stage-survivor">&#128128; Stage Survivor</span>
+            </div>
+
+            <div class="footer">
+                Brought to you by The <a href="https://flaretag.hng14.com" target="_blank" rel="noopener">Flare Tag</a> Marketing Team
+            </div>
+        </div>
+    </div>
+
+    <button class="download-btn" onclick="downloadChecklist()">&#11015; Download My HNG i14 Story</button>
 
     <div id="successModal" class="modal-overlay">
         <div class="modal-content">
@@ -889,7 +1010,7 @@
             <div class="assigned-title-badge" id="assignedBadge">The Workspace Crusader</div>
             <p id="modalMessage" style="font-size: 14px; margin-bottom: 20px; color: #555;">Your Checklist is successfully saved to your device!</p>
             
-            <div class="caption-preview" id="captionText">This is the kind of intern I was during HNG i14!<br>Sign up for HNG at https://hng.tech/internship.</div>
+            <div class="caption-preview" id="captionText">This is the kind of intern I was during HNG i14!<br>Sign up for the HNG Internship at https://hng.tech/internship.</div>
             
             <div class="modal-actions">
                 <button id="shareBtn" class="modal-btn btn-primary" onclick="handleSocialShare()">Copy Caption</button>
@@ -899,39 +1020,65 @@
     </div>
 		
 <script>
-        // Global storage variables for the single generated image blob
-        let checklistBlob = null;
-        let generatedFileName = "";
+        // Global storage variables for the generated image blobs
+        let checklistBlobs = [];
+        let generatedFileNames = [];
         let finalCaptionText = "";
+
+        // Subtitles shown ONLY on the downloaded images for each checklist group
+        const groupSubtitles = {
+            checklistGroup1: "How was your workload?",
+            checklistGroup2: "How was your social life?",
+            checklistGroup3: "What were your wins?"
+        };
+
+        // Persona taglines for the verdict card
+        const personaTaglines = {
+            "The Low-key Intern": "Quiet, but you showed up.",
+            "The Explorer": "Testing the waters, finding your footing.",
+            "The Survivor": "You made it through. Barely, but you made it.",
+            "The Grinder": "Head down, no days off.",
+            "The Legend": "Top tier. Everyone knew your name.",
+            "The HNG Deity": "Built different. The internship bowed to you."
+        };
 
         function syncTrack(val) {
             const el = document.querySelector('.profile-role');
             const trimmed = val.trim();
-            el.innerText = trimmed || 'Frontend Intern';
+            el.innerText = trimmed || 'Sales & Marketing';
         }
 
         function syncTeam(val) {
             const el = document.querySelector('.profile-team');
             const trimmed = val.trim();
-            el.innerText = trimmed || 'Team Alpha';
+            el.innerText = trimmed || 'Team Social Badge';
         }
 
-        function handlePhotoUpload(input) {
-            const file = input.files[0];
-            const photoEl = document.getElementById('profilePhoto');
-            const profileSection = document.getElementById('profileSection');
-            if (!file) {
-                photoEl.removeAttribute('src');
-                profileSection.classList.add('no-photo');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                photoEl.src = e.target.result;
-                profileSection.classList.remove('no-photo');
-            };
-            reader.readAsDataURL(file);
-        }
+		function handlePhotoUpload(input) {
+			const file = input.files[0];
+			const photoEl = document.getElementById('profilePhoto');
+			const profileSection = document.getElementById('profileSection');
+			if (!file) {
+				photoEl.removeAttribute('src');
+				profileSection.classList.add('no-photo');
+				return;
+			}
+			
+			// New check: reject files bigger than 5MB
+			const maxSizeMB = 5;
+			if (file.size > maxSizeMB * 1024 * 1024) {
+				alert(`Please choose an image smaller than ${maxSizeMB}MB.`);
+				input.value = ""; // clears the selected file
+				return;
+			}
+			
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				photoEl.src = e.target.result;
+				profileSection.classList.remove('no-photo');
+			};
+			reader.readAsDataURL(file);
+		}
 
         // Synchronize input fields with the image banner element context live
         function syncSlackId(val) {
@@ -1051,8 +1198,25 @@
                 if ([21, 26].includes(itemNumber)) badges['stage-survivor'] = true;
             });
 
+            // Apply to the main card badges
             Object.keys(badges).forEach(key => {
-                const el = document.querySelector(`.achievement-badge[data-badge="${key}"]`);
+                const el = document.querySelector(`#achievementBadges .achievement-badge[data-badge="${key}"]`);
+                if (badges[key]) {
+                    el.classList.add('unlocked');
+                    el.classList.remove('locked');
+                } else {
+                    el.classList.add('locked');
+                    el.classList.remove('unlocked');
+                }
+            });
+
+            return badges;
+        }
+
+        // Sync the verdict card's badge row to match the main card's unlocked badges
+        function syncVerdictBadges(badges) {
+            Object.keys(badges).forEach(key => {
+                const el = document.querySelector(`#verdictAchievementBadges .achievement-badge[data-badge="${key}"]`);
                 if (badges[key]) {
                     el.classList.add('unlocked');
                     el.classList.remove('locked');
@@ -1063,8 +1227,40 @@
             });
         }
 
-        // Streamlined Single-Canvas Generation Engine
-        function downloadChecklist() {
+        // Fill in the verdict card with the user's current profile + result info
+        function populateVerdictCard(titleData) {
+            // Profile section
+            const slackDisplay = document.getElementById('slackDisplay').innerText;
+            const role = document.querySelector('.profile-role').innerText;
+            const team = document.querySelector('.profile-team').innerText;
+            const photo = document.getElementById('profilePhoto');
+            const profileSection = document.getElementById('profileSection');
+
+            document.getElementById('verdictSlackDisplay').innerText = slackDisplay;
+            document.getElementById('verdictRole').innerText = role;
+            document.getElementById('verdictTeam').innerText = team;
+
+            const verdictPhoto = document.getElementById('verdictProfilePhoto');
+            const verdictProfileSection = document.getElementById('verdictProfileSection');
+            if (profileSection.classList.contains('no-photo')) {
+                verdictProfileSection.classList.add('no-photo');
+                verdictPhoto.removeAttribute('src');
+            } else {
+                verdictProfileSection.classList.remove('no-photo');
+                verdictPhoto.src = photo.src;
+            }
+
+            // Persona, tagline, stat
+            document.getElementById('verdictPersona').innerText = titleData.title;
+            document.getElementById('verdictTagline').innerText = personaTaglines[titleData.title] || "";
+            document.getElementById('verdictStat').innerText = `${titleData.count} OUT OF 26 COMPLETED`;
+
+            // Achievement badges
+            const badges = calculateBadges();
+            syncVerdictBadges(badges);
+        }
+
+		async function downloadChecklist() {
             const inputField = document.getElementById('slackIdInput');
             const slackId = inputField.value.trim();
             const errorTxt = document.getElementById('errorTxt');
@@ -1077,33 +1273,94 @@
             }
 
             errorTxt.style.display = 'none';
-            
+
             const titleData = calculateTitle();
             document.getElementById('assignedBadge').innerText = titleData.title;
-            
-            // Set global text template for sharing/copying
-            finalCaptionText = `I was "${titleData.title}" in HNG i14! 🚀\nSign up at https://hng.tech/internship`;
+
+            finalCaptionText = `I was "${titleData.title}" in HNG i14!\nSign up at https://hng.tech/internship`;
             document.getElementById('captionText').innerText = finalCaptionText;
 
-            const originalCard = document.getElementById('checklistCard');
-            const options = { scale: 2, useCORS: true, backgroundColor: null };
+            const options = { scale: 2, useCORS: true, backgroundColor: null, windowWidth: 1024, windowHeight: 1400 };
 
-            // Render Consolidated Checklist Card Asset
-            html2canvas(originalCard, options).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const downloadLink = document.createElement('a');
-                generatedFileName = `${slackId}-hng14-checklist.png`;
-                
-                downloadLink.download = generatedFileName;
-                downloadLink.href = imgData;
-                downloadLink.click();
+            // Reset storage for this run
+            checklistBlobs = [];
+            generatedFileNames = [];
 
-                // Convert to blob data type to support file sharing systems
-                canvas.toBlob(blob => {
-                    checklistBlob = blob;
-                    openModal();
+            // --- IMAGE 0: VERDICT CARD ---
+            populateVerdictCard(titleData);
+            const verdictCard = document.getElementById('verdictCard');
+            verdictCard.style.display = 'flex';
+
+            let verdictCanvas = await html2canvas(verdictCard, options);
+            triggerDownload(verdictCanvas, `${slackId}-hng14-checklist-verdict.png`);
+            await new Promise(resolve => {
+                verdictCanvas.toBlob(blob => {
+                    checklistBlobs.push(blob);
+                    generatedFileNames.push(`${slackId}-hng14-checklist-verdict.png`);
+                    resolve();
                 }, 'image/png');
             });
+
+            verdictCard.style.display = 'none';
+
+            // --- IMAGES 1-3: CHECKLIST GROUPS ---
+            const originalCard = document.getElementById('checklistCard');
+            const subtitleEl = document.getElementById('headerSubtitle');
+            const originalSubtitle = subtitleEl.innerText;
+
+            const groups = [
+                document.getElementById('checklistGroup1'),
+                document.getElementById('checklistGroup2'),
+                document.getElementById('checklistGroup3')
+            ];
+
+            // Save original card height styles so we can restore them after
+            const originalMinHeight = originalCard.style.minHeight;
+            const originalHeight = originalCard.style.height;
+
+            // Force the card to shrink-to-fit during capture
+            originalCard.style.minHeight = 'auto';
+            originalCard.style.height = 'auto';
+
+            // Loop through each group: show only that group, hide the others, capture, download
+            for (let i = 0; i < groups.length; i++) {
+                groups.forEach((g, idx) => {
+                    g.style.display = (idx === i) ? '' : 'none';
+                });
+
+                // Swap subtitle to match this group's theme, just for the capture
+                subtitleEl.innerText = groupSubtitles[groups[i].id] || originalSubtitle;
+
+                const canvas = await html2canvas(originalCard, options);
+                const filename = `${slackId}-hng14-checklist-part${i + 1}.png`;
+                triggerDownload(canvas, filename);
+
+                // Store blob for sharing later
+                await new Promise(resolve => {
+                    canvas.toBlob(blob => {
+                        checklistBlobs.push(blob);
+                        generatedFileNames.push(filename);
+                        resolve();
+                    }, 'image/png');
+                });
+            }
+
+            // Restore everything back to normal for the on-screen view
+            groups.forEach(g => g.style.display = '');
+            subtitleEl.innerText = originalSubtitle;
+            originalCard.style.minHeight = originalMinHeight;
+            originalCard.style.height = originalHeight;
+
+            openModal();
+        }
+
+        // Helper: turns a canvas into a downloaded PNG file
+        function triggerDownload(canvas, filename) {
+            const imgData = canvas.toDataURL('image/png');
+            const downloadLink = document.createElement('a');
+            downloadLink.download = filename;
+            downloadLink.href = imgData;
+            downloadLink.click();
         }
 
         function openModal() {
@@ -1115,7 +1372,7 @@
             shareBtn.innerText = "Share to Socials"; // Text updated to reflect new share intent
             
             if (modalMsg) {
-                modalMsg.innerText = "Your checklist has been saved! Click below to natively share your image directly to your social applications.";
+                modalMsg.innerText = "Your 4 checklist images have been saved! Click below to natively share them directly to your social applications.";
             }
         }
 
@@ -1127,8 +1384,8 @@
         async function handleSocialShare() {
             const shareBtn = document.getElementById('shareBtn');
 
-            if (!checklistBlob) {
-                alert("Image asset not completely loaded yet. Please try again!");
+            if (!checklistBlobs.length) {
+                alert("Image assets not completely loaded yet. Please try again!");
                 return;
             }
 
@@ -1140,11 +1397,13 @@
                 console.error("Clipboard copy failed:", err);
             }
 
-            // Create shareable file structure out of blob image data
-            const shareFile = new File([checklistBlob], generatedFileName, { type: 'image/png' });
+            // Create shareable file structures out of all blob image data
+            const shareFiles = checklistBlobs.map((blob, idx) =>
+                new File([blob], generatedFileNames[idx], { type: 'image/png' })
+            );
 
-            // STEP 2: Trigger the actual System Share Menu
-            if (navigator.canShare && navigator.share && navigator.canShare({ files: [shareFile] })) {
+            // STEP 2: Trigger the actual System Share Menu with all images
+            if (navigator.canShare && navigator.share && navigator.canShare({ files: shareFiles })) {
                 
                 // Change button text to give immediate visual feedback
                 const originalText = shareBtn.innerText;
@@ -1154,7 +1413,7 @@
                 try {
                     // This pulls up the native Windows/Mac/iOS/Android share dialogue box
                     await navigator.share({
-                        files: [shareFile],
+                        files: shareFiles,
                         text: finalCaptionText,
                         title: 'My HNG i14 Checklist'
                     });
