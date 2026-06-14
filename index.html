@@ -1002,22 +1002,29 @@
         </div>
     </div>
 
-    <button class="download-btn" onclick="downloadChecklist()">&#11015; Download My HNG i14 Story</button>
+    <button class="download-btn" onclick="downloadChecklist()">Download My HNG i14 Story</button>
 
-    <div id="successModal" class="modal-overlay">
-        <div class="modal-content">
-            <h2>Your HNG Checklist is Ready!</h2>
-            <div class="assigned-title-badge" id="assignedBadge">The Workspace Crusader</div>
-            <p id="modalMessage" style="font-size: 14px; margin-bottom: 20px; color: #555;">Your Checklist is successfully saved to your device!</p>
-            
-            <div class="caption-preview" id="captionText">This is the kind of intern I was during HNG i14!<br>Sign up for the HNG Internship at https://hng.tech/internship.</div>
-            
-            <div class="modal-actions">
-                <button id="shareBtn" class="modal-btn btn-primary" onclick="handleSocialShare()">Copy Caption</button>
-                <button class="modal-btn btn-secondary" onclick="closeModal()">Close</button>
-            </div>
-        </div>
-    </div>
+	<div id="successModal" class="modal-overlay">
+		<div class="modal-content">
+			<h2>Your HNG Checklist is Ready!</h2>
+			<div class="assigned-title-badge" id="assignedBadge">The Workspace Crusader</div>
+			<p id="modalMessage" style="font-size: 14px; margin-bottom: 20px; color: #555;">Your Checklist is successfully saved to your device!</p>
+			
+			<div class="caption-preview" id="captionText">This is the kind of intern I was during HNG i14!<br>Sign up for the HNG Internship at https://hng.tech/internship.</div>
+
+			<div class="modal-downloads" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+				<button class="modal-btn btn-secondary" onclick="downloadFile(0)">Download Verdict</button>
+				<button class="modal-btn btn-secondary" onclick="downloadFile(1)">Download Part 1</button>
+				<button class="modal-btn btn-secondary" onclick="downloadFile(2)">Download Part 2</button>
+				<button class="modal-btn btn-secondary" onclick="downloadFile(3)">Download Part 3</button>
+			</div>
+			
+			<div class="modal-actions">
+				<button id="shareBtn" class="modal-btn btn-primary" onclick="handleSocialShare()">Copy Caption</button>
+				<button class="modal-btn btn-secondary" onclick="closeModal()">Close</button>
+			</div>
+		</div>
+	</div>
 		
 <script>
         // Global storage variables for the generated image blobs
@@ -1359,8 +1366,6 @@
             const imgData = canvas.toDataURL('image/png');
             const downloadLink = document.createElement('a');
             downloadLink.download = filename;
-            downloadLink.href = imgData;
-            downloadLink.click();
         }
 
         function openModal() {
@@ -1451,6 +1456,18 @@
             document.getElementById('cardCheckedCounter').innerText = `${initialTitle.count} / 26 Done`;
             calculateBadges();
         });
+		
+		function downloadFile(index) {
+			const blob = checklistBlobs[index];
+			const filename = generatedFileNames[index];
+			if (!blob) return;
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = filename;
+			a.click();
+			URL.revokeObjectURL(url);
+		}
     </script>
 
 </body>
