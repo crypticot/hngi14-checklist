@@ -11,6 +11,10 @@
     
     <!-- html2canvas for image generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Cropper.js for forcing a 1:1 crop on uploaded photos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     
 <style>
         :root {
@@ -42,74 +46,135 @@
             margin: 0 auto 20px auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .input-container label {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 14px;
-            color: #1a1a1a;
-        }
-
-        .input-container input {
-            padding: 14px 16px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: 'DM Sans', sans-serif;
+        /* Shared field card */
+        .field-card {
+            background: white;
+            border-radius: 20px;
+            padding: 14px 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
             width: 100%;
             box-sizing: border-box;
-            transition: border-color 0.2s;
+            transition: box-shadow 0.2s;
         }
 
-        .input-container input:focus {
-            border-color: var(--hng-blue);
+        .field-card label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: #888;
+            cursor: text;
+        }
+
+        .field-card input[type="text"] {
+            border: none;
             outline: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            background: transparent;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        .field-card input[type="text"]::placeholder {
+            color: #bbb;
+            font-weight: 400;
+        }
+
+        .field-card:focus-within {
+            box-shadow: 0 0 0 2px var(--hng-blue), 0 2px 8px rgba(0,0,0,0.07);
         }
 
         .inline-fields {
             display: flex;
-            gap: 12px;
-            margin-top: 12px;
+            gap: 10px;
         }
 
         .inline-field {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
         }
 
-        .inline-field label {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 700;
-            font-size: 12px;
-            color: #1a1a1a;
-        }
-
-        .inline-field input {
-            padding: 12px 14px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
+        .inline-field .field-card input[type="text"] {
             font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-
-        .inline-field input:focus {
-            border-color: var(--hng-blue);
-            outline: none;
+            text-align: left;
         }
 
         .error-message {
             color: #dc2626;
+            font-size: 13px;
+            font-weight: 600;
+            display: none;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        /* Styled photo upload button */
+        .photo-upload-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: white;
+            border-radius: 20px;
+            padding: 14px 22px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .photo-upload-btn:hover {
+            box-shadow: 0 0 0 2px var(--hng-blue), 0 2px 8px rgba(0,0,0,0.07);
+        }
+
+        .upload-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0, 191, 255, 0.1);
+            border: 1.5px solid var(--hng-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 15px;
+        }
+
+        .upload-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .upload-label {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            color: #888;
+        }
+
+        .upload-filename {
+            font-family: 'DM Sans', sans-serif;
             font-size: 14px;
             font-weight: 500;
-            display: none;
+            color: #1a1a1a;
+        }
+
+        .upload-filename.placeholder {
+            color: #bbb;
+            font-weight: 400;
         }
 
         /* Card Scale/Snapshot Wrapper Containers */
@@ -219,20 +284,7 @@
         }
 
         #photoInput {
-            background: white;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            cursor: pointer;
-            width: 100%;
-            box-sizing: border-box;
-            transition: border-color 0.2s;
-        }
-
-        #photoInput:focus {
-            border-color: var(--hng-blue);
-            outline: none;
+            display: none;
         }
 
         .slack-badge {
@@ -780,29 +832,148 @@
         .btn-primary:hover { background-color: #008be3; }
         .btn-secondary { background-color: #e5e7eb; color: #333; }
         .btn-secondary:hover { background-color: #d1d5db; }
+
+        /* Crop Modal */
+        .crop-modal-content {
+            background: white; padding: 24px; border-radius: 20px;
+            max-width: 420px; width: 90%; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(20px); transition: transform 0.3s ease;
+            color: #1a1a1a;
+        }
+
+        .modal-overlay.active .crop-modal-content { transform: translateY(0); }
+
+        .crop-modal-content h2 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #0055ff; margin-top: 0; margin-bottom: 6px; font-size: 22px;
+        }
+
+        .crop-modal-subtext {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px; color: #6b7280;
+            margin-top: 0; margin-bottom: 16px;
+        }
+
+        .crop-image-container {
+            width: 100%;
+            height: 320px;
+            background: #111;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .crop-image-container img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* Mode Toggle */
+        .mode-toggle-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .mode-toggle {
+            display: inline-flex;
+            background: #e5e7eb;
+            border-radius: 30px;
+            padding: 4px;
+            gap: 0;
+        }
+
+        .mode-toggle-btn {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 26px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            background: transparent;
+            color: #555;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+
+        .mode-toggle-btn.active {
+            background: linear-gradient(135deg, #00BFFF, #008be3);
+            color: white;
+            box-shadow: 0 4px 14px rgba(0, 191, 255, 0.4);
+        }
+
+        /* Mode pill in profile section */
+        .mode-pill {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(0, 191, 255, 0.15);
+            border: 1px solid var(--hng-blue);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--hng-blue);
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        .profile-name-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="input-container" style="text-align: center;">
-        <label for="slackIdInput" style="display: block; text-align: center; margin-bottom: 6px;">Enter HNG i14 Slack ID:</label>
-        <input type="text" id="slackIdInput" placeholder="e.g. Mebud" required oninput="syncSlackId(this.value)" style="text-align: center;">
-        <div id="errorTxt" class="error-message" style="text-align: center; width: 100%;">Please enter your Slack ID before downloading.</div>
+    <div class="mode-toggle-wrapper">
+        <div class="mode-toggle">
+            <button class="mode-toggle-btn active" id="toggleIntern" onclick="setMode('intern')">Intern</button>
+            <button class="mode-toggle-btn" id="toggleMentor" onclick="setMode('mentor')">Mentor</button>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <div class="field-card">
+            <label for="slackIdInput">HNG i14 Slack ID</label>
+            <input type="text" id="slackIdInput" placeholder="e.g. Mebud" required oninput="syncSlackId(this.value)">
+        </div>
+        <div id="errorTxt" class="error-message">Please enter your Slack ID before downloading.</div>
 
         <div class="inline-fields">
             <div class="inline-field">
-                <label for="trackInput">Track</label>
-                <input type="text" id="trackInput" placeholder="Sales and Marketing" oninput="syncTrack(this.value)">
+                <div class="field-card">
+                    <label for="trackInput">Track</label>
+                    <input type="text" id="trackInput" placeholder="Sales and Marketing" oninput="syncTrack(this.value)">
+                </div>
             </div>
             <div class="inline-field">
-                <label for="teamInput">Team</label>
-                <input type="text" id="teamInput" placeholder="Team Social Badge" oninput="syncTeam(this.value)">
+                <div class="field-card">
+                    <label for="teamInput">Team</label>
+                    <input type="text" id="teamInput" placeholder="Team Social Badge" oninput="syncTeam(this.value)">
+                </div>
             </div>
         </div>
 
-        <label for="photoInput" style="display: block; text-align: center; margin-top: 16px; margin-bottom: 6px;">Upload Your Photo (optional):</label>
-        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(this)" style="text-align: center; padding: 10px 16px; font-family: 'DM Sans', sans-serif;">
+        <div class="photo-upload-btn" onclick="document.getElementById('photoInput').click()">
+            <div class="upload-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+            </div>
+            <div class="upload-text">
+                <span class="upload-label">Photo (optional)</span>
+                <span class="upload-filename placeholder" id="uploadFilename">No photo selected</span>
+            </div>
+        </div>
+        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoUpload(this)">
 
     </div>
 
@@ -812,7 +983,10 @@
                 <div id="profileSection" class="profile-section no-photo">
                     <img id="profilePhoto" class="profile-photo" src="" alt="Profile Photo">
                     <div class="profile-info">
-                        <div id="slackDisplay" class="profile-name">@Mebud</div>
+                        <div class="profile-name-row">
+                            <div id="slackDisplay" class="profile-name">@Mebud</div>
+                            <span class="mode-pill" id="modePill">INTERN</span>
+                        </div>
                         <div class="profile-role">Sales and Marketing</div>
                         <div class="profile-team">Team Social Badge</div>
                     </div>
@@ -973,7 +1147,10 @@
                 <div class="profile-section no-photo" id="verdictProfileSection">
                     <img class="profile-photo" id="verdictProfilePhoto" src="" alt="Profile Photo">
                     <div class="profile-info">
-                        <div class="profile-name" id="verdictSlackDisplay">@Slack_ID</div>
+                        <div class="profile-name-row">
+                            <div class="profile-name" id="verdictSlackDisplay">@Slack_ID</div>
+                            <span class="mode-pill" id="verdictModePill">INTERN</span>
+                        </div>
                         <div class="profile-role" id="verdictRole">Sales and Marketing</div>
                         <div class="profile-team" id="verdictTeam">Team Social Badge</div>
                     </div>
@@ -1004,7 +1181,22 @@
 
     <button class="download-btn" onclick="downloadChecklist()">Download My HNG i14 Story</button>
 
-	<div id="successModal" class="modal-overlay">
+	<!-- Crop Modal: forces every uploaded photo into a 1:1 crop before it's applied -->
+	<div id="cropModal" class="modal-overlay">
+		<div class="crop-modal-content">
+			<h2>Crop Your Photo</h2>
+			<p class="crop-modal-subtext">Drag to reposition and scroll/pinch to zoom. Your photo will be saved as a square.</p>
+			<div class="crop-image-container">
+				<img id="cropImage" src="" alt="Crop preview">
+			</div>
+			<div class="modal-actions">
+				<button class="modal-btn btn-primary" onclick="applyCrop()">Apply Crop</button>
+				<button class="modal-btn btn-secondary" onclick="cancelCrop()">Cancel</button>
+			</div>
+		</div>
+	</div>
+
+		<div id="successModal" class="modal-overlay">
 		<div class="modal-content">
 			<h2>Your HNG Checklist is Ready!</h2>
 			<div class="assigned-title-badge" id="assignedBadge">The Workspace Crusader</div>
@@ -1031,23 +1223,207 @@
         let checklistBlobs = [];
         let generatedFileNames = [];
         let finalCaptionText = "";
+        let currentMode = 'intern';
 
-        // Subtitles shown ONLY on the downloaded images for each checklist group
-        const groupSubtitles = {
-            checklistGroup1: "How was your workload?",
-            checklistGroup2: "How was your social life?",
-            checklistGroup3: "What were your wins?"
+        // -------------------------------------------------------
+        // CONTENT CONFIG: intern and mentor text pools
+        // -------------------------------------------------------
+        const CONTENT = {
+            intern: {
+                headerTitle: "The HNG i14 Experience",
+                headerSubtitle: "What kind of intern were you?",
+                groupSubtitles: {
+                    checklistGroup1: "How was your workload?",
+                    checklistGroup2: "How was your social life?",
+                    checklistGroup3: "What were your wins?"
+                },
+                categories: [
+                    "The Grind",
+                    "Survival Mode",
+                    "Community Vibes",
+                    "Slack Chronicles",
+                    "The Scoreboards",
+                    "Hall of Fame"
+                ],
+                items: [
+                    // Group 1 — The Grind (6) + Survival Mode (4)
+                    "Stayed up all night on a task",
+                    "Missed a deadline",
+                    "Did a live presentation",
+                    "Fixed a bug/issue at 2AM",
+                    "Asked for an extension",
+                    "Re-read a task 10 times",
+                    // Survival Mode
+                    "Fell sick",
+                    "Almost ran mad",
+                    "Thought of quitting",
+                    "Cried over a task",
+                    // Group 2 — Community Vibes (4) + Slack Chronicles (4)
+                    "Made great friends",
+                    "Fell in love",
+                    "Opened a random huddle",
+                    "Spoke directly with a mentor",
+                    "Opened a huddle by mistake",
+                    "Spoke during a call with muted mic",
+                    "Visited the #mental-health asylum",
+                    "Deported to #yakubu-manage",
+                    // Group 3 — The Scoreboards (4) + Hall of Fame (8)
+                    "Got a -0.5 in check-in",
+                    "Aced a check-in",
+                    "Celebrated passing a stage",
+                    "Topped a scoresheet",
+                    "Received public recognition",
+                    "Became a team lead",
+                    "Received an award",
+                    "Survived all stages"
+                ],
+                personas: [
+                    { title: "The Low-key Intern", min: 0, tagline: "Quiet, but you showed up." },
+                    { title: "The Explorer", min: 4, tagline: "Testing the waters, finding your footing." },
+                    { title: "The Survivor", min: 9, tagline: "You made it through. Barely, but you made it." },
+                    { title: "The Grinder", min: 14, tagline: "Head down, no days off." },
+                    { title: "The Legend", min: 20, tagline: "Top tier. Everyone knew your name." },
+                    { title: "The HNG Deity", min: 25, tagline: "Built different. The internship bowed to you." }
+                ],
+                badges: [
+                    { key: "top-performer", label: "🏆 Top Performer" },
+                    { key: "team-player", label: "🤝 Team Player" },
+                    { key: "sleep-sacrificer", label: "😴 Sleep Sacrificer" },
+                    { key: "bug-hunter", label: "🐛 Bug Hunter" },
+                    { key: "stage-survivor", label: "💀 Stage Survivor" }
+                ],
+                fileTag: "intern",
+                captionTemplate: (title) => `I was "${title}" in HNG i14!\nSign up at https://hng.tech/internship`,
+                shareTitle: "My HNG i14 Checklist",
+                modalTitle: "Your HNG Checklist is Ready!",
+                downloadBtnLabel: "Download My HNG i14 Story"
+            },
+            mentor: {
+                headerTitle: "The HNG i14 Experience",
+                headerSubtitle: "What kind of mentor were you?",
+                groupSubtitles: {
+                    checklistGroup1: "Mentor Group 1 Subtitle",
+                    checklistGroup2: "Mentor Group 2 Subtitle",
+                    checklistGroup3: "Mentor Group 3 Subtitle"
+                },
+                categories: [
+                    "Mentor Category A",
+                    "Mentor Category B",
+                    "Mentor Category C",
+                    "Mentor Category D",
+                    "Mentor Category E",
+                    "Mentor Category F"
+                ],
+                items: [
+                    // Group 1 — Category A (6) + Category B (4)
+                    "Mentor Item 1",
+                    "Mentor Item 2",
+                    "Mentor Item 3",
+                    "Mentor Item 4",
+                    "Mentor Item 5",
+                    "Mentor Item 6",
+                    "Mentor Item 7",
+                    "Mentor Item 8",
+                    "Mentor Item 9",
+                    "Mentor Item 10",
+                    // Group 2 — Category C (4) + Category D (4)
+                    "Mentor Item 11",
+                    "Mentor Item 12",
+                    "Mentor Item 13",
+                    "Mentor Item 14",
+                    "Mentor Item 15",
+                    "Mentor Item 16",
+                    "Mentor Item 17",
+                    "Mentor Item 18",
+                    // Group 3 — Category E (4) + Category F (8)
+                    "Mentor Item 19",
+                    "Mentor Item 20",
+                    "Mentor Item 21",
+                    "Mentor Item 22",
+                    "Mentor Item 23",
+                    "Mentor Item 24",
+                    "Mentor Item 25",
+                    "Mentor Item 26"
+                ],
+                personas: [
+                    { title: "The Ghost Mentor", min: 0, tagline: "Mentor Persona 1 tagline." },
+                    { title: "The Observer", min: 4, tagline: "Mentor Persona 2 tagline." },
+                    { title: "The Steady Hand", min: 9, tagline: "Mentor Persona 3 tagline." },
+                    { title: "The Anchor", min: 14, tagline: "Mentor Persona 4 tagline." },
+                    { title: "The Beacon", min: 20, tagline: "Mentor Persona 5 tagline." },
+                    { title: "The GOAT Mentor", min: 25, tagline: "Mentor Persona 6 tagline." }
+                ],
+                badges: [
+                    { key: "top-performer", label: "🏆 Mentor Badge 1" },
+                    { key: "team-player", label: "🤝 Mentor Badge 2" },
+                    { key: "sleep-sacrificer", label: "😴 Mentor Badge 3" },
+                    { key: "bug-hunter", label: "🐛 Mentor Badge 4" },
+                    { key: "stage-survivor", label: "💀 Mentor Badge 5" }
+                ],
+                fileTag: "mentor",
+                captionTemplate: (title) => `I was "${title}" as an HNG i14 Mentor!\nSign up at https://hng.tech/internship`,
+                shareTitle: "My HNG i14 Mentor Checklist",
+                modalTitle: "Your HNG Mentor Checklist is Ready!",
+                downloadBtnLabel: "Download My HNG i14 Mentor Story"
+            }
         };
 
-        // Persona taglines for the verdict card
-        const personaTaglines = {
-            "The Low-key Intern": "Quiet, but you showed up.",
-            "The Explorer": "Testing the waters, finding your footing.",
-            "The Survivor": "You made it through. Barely, but you made it.",
-            "The Grinder": "Head down, no days off.",
-            "The Legend": "Top tier. Everyone knew your name.",
-            "The HNG Deity": "Built different. The internship bowed to you."
-        };
+        // -------------------------------------------------------
+        // MODE SWITCHING
+        // -------------------------------------------------------
+        function setMode(mode) {
+            currentMode = mode;
+            const c = CONTENT[mode];
+
+            // Toggle button states
+            document.getElementById('toggleIntern').classList.toggle('active', mode === 'intern');
+            document.getElementById('toggleMentor').classList.toggle('active', mode === 'mentor');
+
+            // Mode pill labels
+            const pillLabel = mode === 'intern' ? 'INTERN' : 'MENTOR';
+            document.getElementById('modePill').innerText = pillLabel;
+            document.getElementById('verdictModePill').innerText = pillLabel;
+
+            // Header title and subtitle
+            document.querySelector('#checklistCard .header h1').innerText = c.headerTitle;
+            document.getElementById('headerSubtitle').innerText = c.headerSubtitle;
+
+            // Verdict card header
+            document.querySelector('#verdictCard .header h1').innerText = c.headerTitle;
+
+            // Download button label
+            document.querySelector('.download-btn').innerText = c.downloadBtnLabel;
+
+            // Checklist items and category headers
+            const allItems = document.querySelectorAll('.checklist-grid .item');
+            allItems.forEach((el, i) => {
+                el.querySelector('.item-text').innerText = c.items[i] || '';
+                // Reset check state
+                el.classList.remove('checked');
+                el.setAttribute('aria-checked', 'false');
+            });
+
+            // Category headers — 6 headers across the 3 groups
+            const catHeaders = document.querySelectorAll('.checklist-grid .category-header');
+            catHeaders.forEach((el, i) => {
+                el.innerText = c.categories[i] || '';
+            });
+
+            // Badge labels on both cards
+            c.badges.forEach(b => {
+                const mainEl = document.querySelector(`#achievementBadges .achievement-badge[data-badge="${b.key}"]`);
+                const verdictEl = document.querySelector(`#verdictAchievementBadges .achievement-badge[data-badge="${b.key}"]`);
+                // Preserve emoji prefix, replace text label
+                if (mainEl) mainEl.innerText = b.label;
+                if (verdictEl) verdictEl.innerText = b.label;
+            });
+
+            // Reset counter and persona title
+            const initialTitle = calculateTitle();
+            document.getElementById('cardPersonaTitle').innerText = initialTitle.title;
+            document.getElementById('cardCheckedCounter').innerText = `${initialTitle.count} / 26 Done`;
+            calculateBadges();
+        }
 
         function syncTrack(val) {
             const el = document.querySelector('.profile-role');
@@ -1065,26 +1441,112 @@
 			const file = input.files[0];
 			const photoEl = document.getElementById('profilePhoto');
 			const profileSection = document.getElementById('profileSection');
+			const filenameEl = document.getElementById('uploadFilename');
+
 			if (!file) {
 				photoEl.removeAttribute('src');
 				profileSection.classList.add('no-photo');
+				filenameEl.innerText = 'No photo selected';
+				filenameEl.classList.add('placeholder');
 				return;
 			}
-			
-			// New check: reject files bigger than 5MB
+
+			// Reject files bigger than 5MB
 			const maxSizeMB = 5;
 			if (file.size > maxSizeMB * 1024 * 1024) {
 				alert(`Please choose an image smaller than ${maxSizeMB}MB.`);
-				input.value = ""; // clears the selected file
+				input.value = "";
 				return;
 			}
-			
+
+			// Store filename for display after crop is confirmed
+			filenameEl.dataset.pendingName = file.name;
+
 			const reader = new FileReader();
 			reader.onload = function(e) {
-				photoEl.src = e.target.result;
-				profileSection.classList.remove('no-photo');
+				// Hand off to the crop modal instead of applying the photo directly.
+				openCropper(e.target.result);
 			};
 			reader.readAsDataURL(file);
+		}
+
+		// Holds the active Cropper.js instance while the crop modal is open
+		let cropperInstance = null;
+
+		function openCropper(dataUrl) {
+			const cropImage = document.getElementById('cropImage');
+			const cropModal = document.getElementById('cropModal');
+
+			cropImage.src = dataUrl;
+			cropModal.classList.add('active');
+
+			cropImage.onload = function() {
+				if (cropperInstance) {
+					cropperInstance.destroy();
+				}
+				cropperInstance = new Cropper(cropImage, {
+					aspectRatio: 1,
+					viewMode: 1,
+					dragMode: 'move',
+					autoCropArea: 1,
+					cropBoxMovable: false,
+					cropBoxResizable: false,
+					background: false,
+					guides: false,
+					center: false,
+					highlight: false
+				});
+			};
+		}
+
+		function applyCrop() {
+			if (!cropperInstance) return;
+
+			const canvas = cropperInstance.getCroppedCanvas({
+				width: 600,
+				height: 600,
+				imageSmoothingEnabled: true,
+				imageSmoothingQuality: 'high'
+			});
+			const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+
+			const photoEl = document.getElementById('profilePhoto');
+			const profileSection = document.getElementById('profileSection');
+			const filenameEl = document.getElementById('uploadFilename');
+
+			photoEl.src = croppedDataUrl;
+			profileSection.classList.remove('no-photo');
+
+			// Update styled button filename now that crop is confirmed
+			if (filenameEl.dataset.pendingName) {
+				filenameEl.innerText = filenameEl.dataset.pendingName;
+				filenameEl.classList.remove('placeholder');
+			}
+
+			closeCropModal();
+		}
+
+		function cancelCrop() {
+			const photoInput = document.getElementById('photoInput');
+			const photoEl = document.getElementById('profilePhoto');
+			const profileSection = document.getElementById('profileSection');
+			const filenameEl = document.getElementById('uploadFilename');
+
+			if (!photoEl.getAttribute('src')) {
+				profileSection.classList.add('no-photo');
+				filenameEl.innerText = 'No photo selected';
+				filenameEl.classList.add('placeholder');
+			}
+			photoInput.value = "";
+			closeCropModal();
+		}
+
+		function closeCropModal() {
+			document.getElementById('cropModal').classList.remove('active');
+			if (cropperInstance) {
+				cropperInstance.destroy();
+				cropperInstance = null;
+			}
 		}
 
         // Synchronize input fields with the image banner element context live
@@ -1176,13 +1638,12 @@
         function calculateTitle() {
             const allItems = Array.from(document.querySelectorAll('.checklist-grid .item'));
             const totalCount = allItems.filter(item => item.classList.contains('checked')).length;
-            
-            if (totalCount >= 25) return { title: "The HNG Deity", count: totalCount };
-            if (totalCount >= 20) return { title: "The Legend", count: totalCount };
-            if (totalCount >= 14) return { title: "The Grinder", count: totalCount };
-            if (totalCount >= 9) return { title: "The Survivor", count: totalCount };
-            if (totalCount >= 4) return { title: "The Explorer", count: totalCount };
-            return { title: "The Low-key Intern", count: totalCount };
+            const personas = CONTENT[currentMode].personas;
+            let result = personas[0];
+            for (const p of personas) {
+                if (totalCount >= p.min) result = p;
+            }
+            return { title: result.title, count: totalCount };
         }
 
         function calculateBadges() {
@@ -1247,6 +1708,9 @@
             document.getElementById('verdictRole').innerText = role;
             document.getElementById('verdictTeam').innerText = team;
 
+            // Sync mode pill on verdict card
+            document.getElementById('verdictModePill').innerText = document.getElementById('modePill').innerText;
+
             const verdictPhoto = document.getElementById('verdictProfilePhoto');
             const verdictProfileSection = document.getElementById('verdictProfileSection');
             if (profileSection.classList.contains('no-photo')) {
@@ -1258,8 +1722,10 @@
             }
 
             // Persona, tagline, stat
+            const personas = CONTENT[currentMode].personas;
+            const tagline = personas.find(p => p.title === titleData.title)?.tagline || "";
             document.getElementById('verdictPersona').innerText = titleData.title;
-            document.getElementById('verdictTagline').innerText = personaTaglines[titleData.title] || "";
+            document.getElementById('verdictTagline').innerText = tagline;
             document.getElementById('verdictStat').innerText = `${titleData.count} OUT OF 26 COMPLETED`;
 
             // Achievement badges
@@ -1281,10 +1747,14 @@
 
             errorTxt.style.display = 'none';
 
+            const c = CONTENT[currentMode];
             const titleData = calculateTitle();
             document.getElementById('assignedBadge').innerText = titleData.title;
 
-            finalCaptionText = `I was "${titleData.title}" in HNG i14!\nSign up at https://hng.tech/internship`;
+            // Update modal title to match mode
+            document.querySelector('#successModal .modal-content h2').innerText = c.modalTitle;
+
+            finalCaptionText = c.captionTemplate(titleData.title);
             document.getElementById('captionText').innerText = finalCaptionText;
 
             const options = { scale: 2, useCORS: true, backgroundColor: null, windowWidth: 1024, windowHeight: 1400 };
@@ -1293,17 +1763,19 @@
             checklistBlobs = [];
             generatedFileNames = [];
 
+            const fileTag = c.fileTag;
+
             // --- IMAGE 0: VERDICT CARD ---
             populateVerdictCard(titleData);
             const verdictCard = document.getElementById('verdictCard');
             verdictCard.style.display = 'flex';
 
             let verdictCanvas = await html2canvas(verdictCard, options);
-            triggerDownload(verdictCanvas, `${slackId}-hng14-checklist-verdict.png`);
+            triggerDownload(verdictCanvas, `${slackId}-hng14-${fileTag}-checklist-verdict.png`);
             await new Promise(resolve => {
                 verdictCanvas.toBlob(blob => {
                     checklistBlobs.push(blob);
-                    generatedFileNames.push(`${slackId}-hng14-checklist-verdict.png`);
+                    generatedFileNames.push(`${slackId}-hng14-${fileTag}-checklist-verdict.png`);
                     resolve();
                 }, 'image/png');
             });
@@ -1336,10 +1808,10 @@
                 });
 
                 // Swap subtitle to match this group's theme, just for the capture
-                subtitleEl.innerText = groupSubtitles[groups[i].id] || originalSubtitle;
+                subtitleEl.innerText = c.groupSubtitles[groups[i].id] || originalSubtitle;
 
                 const canvas = await html2canvas(originalCard, options);
-                const filename = `${slackId}-hng14-checklist-part${i + 1}.png`;
+                const filename = `${slackId}-hng14-${fileTag}-checklist-part${i + 1}.png`;
                 triggerDownload(canvas, filename);
 
                 // Store blob for sharing later
@@ -1420,7 +1892,7 @@
                     await navigator.share({
                         files: shareFiles,
                         text: finalCaptionText,
-                        title: 'My HNG i14 Checklist'
+                        title: CONTENT[currentMode].shareTitle
                     });
                     
                     // Revert button back after a short delay
