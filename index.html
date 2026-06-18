@@ -765,9 +765,6 @@
                 padding-top: 14px;
                 margin-top: 18px;
             }
-            .confetti-particle {
-                display: none;
-            }
             .verdict-persona {
                 font-size: 30px;
             }
@@ -1299,73 +1296,74 @@
                 downloadBtnLabel: "Download My HNG i14 Story"
             },
             mentor: {
-                headerTitle: "The HNG i14 Experience",
-                headerSubtitle: "What kind of mentor were you?",
-                groupSubtitles: {
-                    checklistGroup1: "Mentor Group 1 Subtitle",
-                    checklistGroup2: "Mentor Group 2 Subtitle",
-                    checklistGroup3: "Mentor Group 3 Subtitle"
-                },
-                categories: [
-                    "Mentor Category A",
-                    "Mentor Category B",
-                    "Mentor Category C",
-                    "Mentor Category D",
-                    "Mentor Category E",
-                    "Mentor Category F"
-                ],
-                items: [
-                    // Group 1 — Category A (6) + Category B (4)
-                    "Mentor Item 1",
-                    "Mentor Item 2",
-                    "Mentor Item 3",
-                    "Mentor Item 4",
-                    "Mentor Item 5",
-                    "Mentor Item 6",
-                    "Mentor Item 7",
-                    "Mentor Item 8",
-                    "Mentor Item 9",
-                    "Mentor Item 10",
-                    // Group 2 — Category C (4) + Category D (4)
-                    "Mentor Item 11",
-                    "Mentor Item 12",
-                    "Mentor Item 13",
-                    "Mentor Item 14",
-                    "Mentor Item 15",
-                    "Mentor Item 16",
-                    "Mentor Item 17",
-                    "Mentor Item 18",
-                    // Group 3 — Category E (4) + Category F (8)
-                    "Mentor Item 19",
-                    "Mentor Item 20",
-                    "Mentor Item 21",
-                    "Mentor Item 22",
-                    "Mentor Item 23",
-                    "Mentor Item 24",
-                    "Mentor Item 25",
-                    "Mentor Item 26"
-                ],
-                personas: [
-                    { title: "The Ghost Mentor", min: 0, tagline: "Mentor Persona 1 tagline." },
-                    { title: "The Observer", min: 4, tagline: "Mentor Persona 2 tagline." },
-                    { title: "The Steady Hand", min: 9, tagline: "Mentor Persona 3 tagline." },
-                    { title: "The Anchor", min: 14, tagline: "Mentor Persona 4 tagline." },
-                    { title: "The Beacon", min: 20, tagline: "Mentor Persona 5 tagline." },
-                    { title: "The GOAT Mentor", min: 25, tagline: "Mentor Persona 6 tagline." }
-                ],
-                badges: [
-                    { key: "top-performer", label: "🏆 Mentor Badge 1" },
-                    { key: "team-player", label: "🤝 Mentor Badge 2" },
-                    { key: "sleep-sacrificer", label: "😴 Mentor Badge 3" },
-                    { key: "bug-hunter", label: "🐛 Mentor Badge 4" },
-                    { key: "stage-survivor", label: "💀 Mentor Badge 5" }
-                ],
-                fileTag: "mentor",
-                captionTemplate: (title) => `I was "${title}" as an HNG i14 Mentor!\nSign up at https://hng.tech/internship`,
-                shareTitle: "My HNG i14 Mentor Checklist",
-                modalTitle: "Your HNG Mentor Checklist is Ready!",
-                downloadBtnLabel: "Download My HNG i14 Mentor Story"
-            }
+				headerTitle: "The HNG i14 Experience",
+				headerSubtitle: "What kind of mentor were you?",
+				groupSubtitles: {
+					checklistGroup1: "How was the grading life?",
+					checklistGroup2: "How was the community?",
+					checklistGroup3: "What did you earn?"
+				},
+				categories: [
+					"The Grind",
+					"Survival Mode",
+					"Community Vibes",
+					"Slack Chronicles",
+					"The Scoreboards",
+					"Hall of Fame"
+				],
+				items: [
+					// Group 1 — The Grind (6) + Survival Mode (4)
+					"Stayed up all night grading",
+					"Graded up to 400+ in total",
+					"Answered a question 10x",
+					"Found a copied/fully AI work",
+					"Ignored some DMs",
+					"Answered all DMs",
+					// Survival Mode
+					"Ghosted/Ran from Slack",
+					"Fell sick",
+					"Had to do intern work",
+					"Ranted about interns",
+					// Group 2 — Community Vibes (4) + Slack Chronicles (4)
+					"Made mentor friends",
+					"Connected with interns",
+					"Met-up with someone from HNG",
+					"Initiated small violence/prank",
+					"Sent interns to #yakubu-manage",
+					"Deactivated inactive intern(s)",
+					"Engaged in #music, #games, etc.",
+					"Hosted Live Presentation/Grading",
+					// Group 3 — The Scoreboards (4) + Hall of Fame (4)
+					"Team got #1 for a check-in",
+					"Team was #1 for a week",
+					"Collected at least -0.5",
+					"Donated -0.5 to a team",
+					"Got appreciated privately",
+					"Received a public shout-out",
+					"Received an award",
+					"Helped an intern improve"
+				],
+				personas: [
+					{ title: "The Ghost Mentor", min: 0, tagline: "You were there. Technically." },
+					{ title: "The Observer", min: 4, tagline: "Watching from a distance, never fully stepping in." },
+					{ title: "The Steady Hand", min: 9, tagline: "Consistent, dependable, quietly impactful." },
+					{ title: "The Anchor", min: 14, tagline: "Your interns leaned on you more than they admitted." },
+					{ title: "The Beacon", min: 20, tagline: "Interns found their way because of you." },
+					{ title: "The GOAT Mentor", min: 25, tagline: "You didn't just mentor. You left a legacy." }
+				],
+				badges: [
+					{ key: "top-performer", label: "🏆 Top Mentor" },
+					{ key: "team-player", label: "🤝 Intern Whisperer" },
+					{ key: "sleep-sacrificer", label: "😴 Night Grader" },
+					{ key: "bug-hunter", label: "⚖️ Score Keeper" },
+					{ key: "stage-survivor", label: "💀 The Enforcer" }
+				],
+				fileTag: "mentor",
+				captionTemplate: (title) => `I was "${title}" as an HNG i14 Mentor!\nSign up at https://hng.tech/internship`,
+				shareTitle: "My HNG i14 Mentor Checklist",
+				modalTitle: "Your HNG Mentor Checklist is Ready!",
+				downloadBtnLabel: "Download My HNG i14 Mentor Story"
+			},
         };
 
         // -------------------------------------------------------
@@ -1647,39 +1645,45 @@
         }
 
         function calculateBadges() {
-            const allItems = Array.from(document.querySelectorAll('.checklist-grid .item'));
-            const badges = {
-                'top-performer': false,
-                'team-player': false,
-                'sleep-sacrificer': false,
-                'bug-hunter': false,
-                'stage-survivor': false
-            };
+			const allItems = Array.from(document.querySelectorAll('.checklist-grid .item'));
 
-            allItems.forEach((item, index) => {
-                const itemNumber = index + 1;
-                if (!item.classList.contains('checked')) return;
-                if ([23, 24, 25].includes(itemNumber)) badges['top-performer'] = true;
-                if ([12, 13].includes(itemNumber)) badges['team-player'] = true;
-                if ([1, 5].includes(itemNumber)) badges['sleep-sacrificer'] = true;
-                if ([22].includes(itemNumber)) badges['bug-hunter'] = true;
-                if ([21, 26].includes(itemNumber)) badges['stage-survivor'] = true;
-            });
+			const isChecked = (n) => allItems[n - 1]?.classList.contains('checked') || false;
 
-            // Apply to the main card badges
-            Object.keys(badges).forEach(key => {
-                const el = document.querySelector(`#achievementBadges .achievement-badge[data-badge="${key}"]`);
-                if (badges[key]) {
-                    el.classList.add('unlocked');
-                    el.classList.remove('locked');
-                } else {
-                    el.classList.add('locked');
-                    el.classList.remove('unlocked');
-                }
-            });
+			let badges = {};
 
-            return badges;
-        }
+			if (currentMode === 'intern') {
+				badges = {
+					'top-performer':   isChecked(23) && isChecked(25),
+					'team-player':     isChecked(11) && isChecked(14),
+					'sleep-sacrificer': isChecked(1) && isChecked(4),
+					'bug-hunter':      isChecked(4)  && isChecked(6),
+					'stage-survivor':  isChecked(21) && isChecked(26)
+				};
+			} else {
+				badges = {
+					'top-performer':   isChecked(24) && isChecked(25),
+					'team-player':     isChecked(12) && isChecked(26),
+					'sleep-sacrificer': isChecked(1) && isChecked(2),
+					'bug-hunter':      isChecked(21) && isChecked(22),
+					'stage-survivor':  isChecked(15) && isChecked(16)
+				};
+			}
+
+			Object.keys(badges).forEach(key => {
+				const el = document.querySelector(`#achievementBadges .achievement-badge[data-badge="${key}"]`);
+				if (el) {
+					if (badges[key]) {
+						el.classList.add('unlocked');
+						el.classList.remove('locked');
+					} else {
+						el.classList.add('locked');
+						el.classList.remove('unlocked');
+					}
+				}
+			});
+
+			return badges;
+		}
 
         // Sync the verdict card's badge row to match the main card's unlocked badges
         function syncVerdictBadges(badges) {
